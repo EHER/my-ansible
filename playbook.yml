@@ -1,0 +1,14 @@
+---
+- hosts: webservers
+  sudo: yes
+  tasks:
+    - name: add ondrej php repository
+      action: apt_repository repo=ppa:ondrej/php5
+    - name: add nginx repository
+      action: apt_repository repo=ppa:nginx/stable
+    - name: update apt repository cache
+      action: apt update_cache=yes
+    - name: install php
+      action: apt pkg=php5 force=yes
+    - name: install nginx
+      action: apt pkg=nginx
