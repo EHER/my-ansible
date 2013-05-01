@@ -23,5 +23,11 @@
     - name: ensure apache2 is absent
       action: apt pkg=apache2 purge=yes
 
+    - name: ensure queroservoluntario.com configuration is present
+      action: copy src=files/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-available/queroservoluntario.com owner=root group=root mode=0644
+
+    - name: ensure queroservoluntario.com is enabled
+      action: file src=/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-enabled/queroservoluntario.com state=link
+
     - name: ensure nginx is running
       action: service name=nginx state=started
