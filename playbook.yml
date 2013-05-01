@@ -2,13 +2,26 @@
 - hosts: webservers
   sudo: yes
   tasks:
-    - name: add ondrej php repository
+    - name: ensure ondrej/php5 repository is registered
       action: apt_repository repo=ppa:ondrej/php5
-    - name: add nginx repository
+
+    - name: ensure nginx repository is registered
       action: apt_repository repo=ppa:nginx/stable
-    - name: update apt repository cache
+
+    - name: update apt repository cache is updated
       action: apt update_cache=yes
-    - name: install php
+
+    - name: ensure php is installed
       action: apt pkg=php5 force=yes
-    - name: install nginx
+
+    - name: ensure nginx is installed
       action: apt pkg=nginx
+
+    - name: ensure apache2 is stopped
+      action: service name=apache2 state=stopped
+
+    - name: ensure apache2 is absent
+      action: apt pkg=apache2 purge=yes
+
+    - name: ensure nginx is running
+      action: service name=nginx state=started
