@@ -8,11 +8,14 @@
     - name: ensure nginx repository is registered
       action: apt_repository repo=ppa:nginx/stable
 
-    - name: update apt repository cache is updated
+    - name: ensure apt cache is updated
       action: apt update_cache=yes
 
     - name: ensure php is installed
       action: apt pkg=php5 force=yes
+
+    - name: ensure git is installed
+      action: apt pkg=git
 
     - name: ensure nginx is installed
       action: apt pkg=nginx
@@ -28,6 +31,9 @@
 
     - name: ensure queroservoluntario.com is enabled
       action: file src=/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-enabled/queroservoluntario.com state=link
+
+    - name: ensure queryservoluntario project is cloned
+      action: git repo=git://github.com/EHER/voluntarios.git dest=/var/www/queroservoluntario.com
 
     - name: ensure nginx is running
       action: service name=nginx state=started
