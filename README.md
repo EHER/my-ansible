@@ -11,7 +11,7 @@ cd my-ansible
 
 You should use pip to install dependencies (virtualenv is recommended)
 ```bash
-pip instal -r deps.txt
+pip install -r deps.txt
 ```
 
 # Configuration
