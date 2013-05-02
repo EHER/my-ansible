@@ -32,8 +32,26 @@
     - name: ensure queroservoluntario.com is enabled
       action: file src=/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-enabled/queroservoluntario.com state=link
 
-    - name: ensure queryservoluntario project is cloned
-      action: git repo=git://github.com/EHER/voluntarios.git dest=/var/www/queroservoluntario.com
-
     - name: ensure nginx is running
       action: service name=nginx state=started
+
+- hosts: gitservers
+  sudo: yes
+  tasks:
+    - name: ensure git is installed
+      action: apt pkg=git
+
+    - name: ensure git user exists
+      action: user name=git shell=/usr/bin/git-shell home=/home/git generate_ssh_key=yes
+
+    - name: ensure authorized_keys exists
+      action: copy src=files/home/git/.ssh/authorized_keys dest=/home/git/.ssh/authorized_keys owner=git mode=0600
+
+    - name: ensure test-repo directory exists
+      action: file path=/home/git/test-repo.git owner=git group=git mode=0775 state=directory
+
+    - name: create test-repo repository
+      action: command chdir=/home/git/test-repo.git creates=/home/git/test-repo.git/HEAD git init --bare
+
+    - name: ensure test-repo permisions
+      action: command chdir=/home/git/test-repo.git chown git.git -R .
