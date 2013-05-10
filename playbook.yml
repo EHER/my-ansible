@@ -14,6 +14,9 @@
     - name: ensure php is installed
       action: apt pkg=php5 force=yes
 
+    - name: ensure php-curl is installed
+      action: apt pkg=php5-curl force=yes
+
     - name: ensure git is installed
       action: apt pkg=git
 
@@ -35,9 +38,36 @@
     - name: ensure nginx is running
       action: service name=nginx state=started
 
+- hosts: deployservers
+  sudo: yes
+  tasks:
+    - name: ensure ondrej/php5 repository is registered
+      action: apt_repository repo=ppa:ondrej/php5
+
+    - name: ensure nginx repository is registered
+      action: apt_repository repo=ppa:nginx/stable
+
+    - name: ensure apt cache is updated
+      action: apt update_cache=yes
+
+    - name: ensure php is installed
+      action: apt pkg=php5 force=yes
+
+    - name: ensure php-curl is installed
+      action: apt pkg=php5-curl force=yes
+
+    - name: ensure build-essential is installed
+      action: apt pkg=build-essential
+
+    - name: ensure debhelper is installed
+      action: apt pkg=debhelper
+
 - hosts: gitservers
   sudo: yes
   tasks:
+    - name: ensure apt cache is updated
+      action: apt update_cache=yes
+
     - name: ensure git is installed
       action: apt pkg=git
 
@@ -55,3 +85,7 @@
 
     - name: ensure test-repo permisions
       action: command chdir=/home/git/test-repo.git chown git.git -R .
+
+    - name: ensure test-repo update hook exists
+      action: copy src=files/home/git/test-repo.git/hooks/update dest=/home/git/test-repo.git/hooks/update owner=git mode=0755
+
