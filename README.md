@@ -49,3 +49,7 @@ Just run the playbook
 ```bash
 ansible-playbook playbook.yml
 ```
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/EHER/my-ansible/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
