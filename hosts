@@ -1,6 +1,6 @@
-[webservers]
+[web]
 
-[deployservers]
+[package]
 
-[gitservers]
+[git]
 

@@ -1,5 +1,5 @@
 ---
-- hosts: webservers
+- hosts: web
   sudo: yes
   tasks:
     - name: ensure ondrej/php5 repository is registered
@@ -29,16 +29,31 @@
     - name: ensure apache2 is absent
       action: apt pkg=apache2 purge=yes
 
+    - name: ensure nginx is running
+      action: service name=nginx state=started
+
+- hosts: web
+  sudo: yes
+  tasks:
     - name: ensure queroservoluntario.com configuration is present
       action: copy src=files/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-available/queroservoluntario.com owner=root group=root mode=0644
 
     - name: ensure queroservoluntario.com is enabled
       action: file src=/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-enabled/queroservoluntario.com state=link
 
-    - name: ensure nginx is running
-      action: service name=nginx state=started
+    - name: ensure packages directory exists
+      action: file path=/var/www/packages owner=git group=git mode=0775 state=directory
 
-- hosts: deployservers
+    - name: ensure packages configuration is present
+      action: copy src=files/etc/nginx/sites-available/packages dest=/etc/nginx/sites-available/packages owner=root group=root mode=0644
+
+    - name: ensure packages is enabled
+      action: file src=/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-enabled/queroservoluntario.com state=link
+
+    - name: ensure nginx is running
+      action: service name=nginx state=reloaded
+
+- hosts: package
   sudo: yes
   tasks:
     - name: ensure ondrej/php5 repository is registered
@@ -62,7 +77,19 @@
     - name: ensure debhelper is installed
       action: apt pkg=debhelper
 
-- hosts: gitservers
+    - name: ensure dpkg-dev is installed
+      action: apt pkg=dpkg-dev
+
+    - name: ensure ruby is installed
+      action: apt pkg=ruby
+
+    - name: ensure ruby-dev is installed
+      action: apt pkg=ruby-dev
+
+    - name: ensure fpm gem is installed
+      action: gem name=fpm state=latest
+
+- hosts: git
   sudo: yes
   tasks:
     - name: ensure apt cache is updated
@@ -86,6 +113,7 @@
     - name: ensure test-repo permisions
       action: command chdir=/home/git/test-repo.git chown git.git -R .
 
-    - name: ensure test-repo update hook exists
-      action: copy src=files/home/git/test-repo.git/hooks/update dest=/home/git/test-repo.git/hooks/update owner=git mode=0755
+    - name: ensure test-repo post-receive hook exists
+      action: copy src=files/home/git/test-repo.git/hooks/post-receive dest=/home/git/test-repo.git/hooks/post-receive owner=git mode=0755
+
 

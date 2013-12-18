@@ -1,5 +1,5 @@
 # my-ansible
-My Servers' configurations using Ansible
+Orchestration of my servers using Ansible.
 
 # Installation
 Clone the repository
@@ -34,7 +34,7 @@ vim hosts
 ```
 
 ```
-[webservers]
+[web]
 my-aws-host-or-something-like-this.com
 other-host.com
 ```
