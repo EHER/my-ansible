@@ -113,7 +113,7 @@
     - name: ensure queroservoluntario.com configuration is present
       action: copy src=files/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-available/queroservoluntario.com owner=root group=root mode=0644
 
-    - name: ensure queroservoluntario.com is enabled
+    - name: ensure queroservoluntario.com website is enabled
       action: file src=/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-enabled/queroservoluntario.com state=link
 
     - name: ensure packages directory exists
@@ -122,8 +122,11 @@
     - name: ensure packages configuration is present
       action: copy src=files/etc/nginx/sites-available/packages dest=/etc/nginx/sites-available/packages owner=root group=root mode=0644
 
-    - name: ensure packages is enabled
-      action: file src=/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-enabled/queroservoluntario.com state=link
+    - name: ensure packages website is enabled
+      action: file path=/etc/nginx/sites-enabled/default state=absent
+
+    - name: ensure default website is disabled
+      action: file src=/etc/nginx/sites-available/packages dest=/etc/nginx/sites-enabled/packages state=link
 
     - name: ensure nginx is running
       action: service name=nginx state=reloaded
