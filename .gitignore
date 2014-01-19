@@ -1,5 +1,7 @@
 .Python
+.vagrant
 bin/
 include/
 lib/
 share/
+vagrant_ansible_inventory_default

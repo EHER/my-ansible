@@ -1,4 +1,16 @@
 ---
+- hosts: all
+  sudo: yes
+  tasks:
+    - name: ensure apt cache is updated
+      action: apt update_cache=yes
+
+    - name: ensure software-properties-common is installed
+      action: apt pkg=software-properties-common force=yes
+
+    - name: ensure python-software-properties is installed
+      action: apt pkg=python-software-properties force=yes
+
 - hosts: web
   sudo: yes
   tasks:
@@ -31,27 +43,6 @@
 
     - name: ensure nginx is running
       action: service name=nginx state=started
-
-- hosts: web
-  sudo: yes
-  tasks:
-    - name: ensure queroservoluntario.com configuration is present
-      action: copy src=files/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-available/queroservoluntario.com owner=root group=root mode=0644
-
-    - name: ensure queroservoluntario.com is enabled
-      action: file src=/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-enabled/queroservoluntario.com state=link
-
-    - name: ensure packages directory exists
-      action: file path=/var/www/packages owner=git group=git mode=0775 state=directory
-
-    - name: ensure packages configuration is present
-      action: copy src=files/etc/nginx/sites-available/packages dest=/etc/nginx/sites-available/packages owner=root group=root mode=0644
-
-    - name: ensure packages is enabled
-      action: file src=/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-enabled/queroservoluntario.com state=link
-
-    - name: ensure nginx is running
-      action: service name=nginx state=reloaded
 
 - hosts: package
   sudo: yes
@@ -86,15 +77,15 @@
     - name: ensure ruby-dev is installed
       action: apt pkg=ruby-dev
 
+    - name: ensure rubygems is installed
+      action: apt pkg=rubygems
+
     - name: ensure fpm gem is installed
       action: gem name=fpm state=latest
 
 - hosts: git
   sudo: yes
   tasks:
-    - name: ensure apt cache is updated
-      action: apt update_cache=yes
-
     - name: ensure git is installed
       action: apt pkg=git
 
@@ -116,4 +107,23 @@
     - name: ensure test-repo post-receive hook exists
       action: copy src=files/home/git/test-repo.git/hooks/post-receive dest=/home/git/test-repo.git/hooks/post-receive owner=git mode=0755
 
+- hosts: web
+  sudo: yes
+  tasks:
+    - name: ensure queroservoluntario.com configuration is present
+      action: copy src=files/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-available/queroservoluntario.com owner=root group=root mode=0644
 
+    - name: ensure queroservoluntario.com is enabled
+      action: file src=/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-enabled/queroservoluntario.com state=link
+
+    - name: ensure packages directory exists
+      action: file path=/var/www/packages owner=git group=git mode=0775 state=directory
+
+    - name: ensure packages configuration is present
+      action: copy src=files/etc/nginx/sites-available/packages dest=/etc/nginx/sites-available/packages owner=root group=root mode=0644
+
+    - name: ensure packages is enabled
+      action: file src=/etc/nginx/sites-available/queroservoluntario.com dest=/etc/nginx/sites-enabled/queroservoluntario.com state=link
+
+    - name: ensure nginx is running
+      action: service name=nginx state=reloaded

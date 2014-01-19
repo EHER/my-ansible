@@ -1,6 +1,5 @@
 server {
     listen 80;
-    listen [::]:80 ipv6only=on;
 
     server_name queroservoluntario.com www.queroservoluntario.com;
     root /var/www/queroservoluntario.com/web/;

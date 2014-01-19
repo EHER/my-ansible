@@ -9,9 +9,9 @@ cd test-repo
 
 if [ -f Makefile ];
 then
-    make deb
+    make config install deb
 fi
-
 mv *.deb /var/www/packages
+
 cd /var/www/packages
 dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz

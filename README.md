@@ -50,6 +50,21 @@ Just run the playbook
 ansible-playbook playbook.yml
 ```
 
+# Useful Commands
 
+Add your private key to git user
+```bash
+cat ~/.ssh/id_rsa.pub > files/home/git/.ssh/authorized_keys
+```
+
+Get Vagrant private_key_file
+```bash
+vagrant ssh-config | grep IdentityFile  | awk '{print $2}'
+```
+
+Get Vagrant remote_user
+```bash
+vagrant ssh-config | grep 'User ' | awk '{print $2}'
+```
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/EHER/my-ansible/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
