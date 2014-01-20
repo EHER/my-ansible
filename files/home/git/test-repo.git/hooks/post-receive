@@ -9,7 +9,7 @@ cd test-repo
 
 if [ -f Makefile ];
 then
-    make config install deb
+    make deb
 fi
 mv *.deb /var/www/packages
 
