@@ -1,0 +1,5 @@
+#!/bin/sh
+# pre-receive hook
+{% if item.hook_pre_receive %}
+{{ item.hook_pre_receive }}
+{% endif %}

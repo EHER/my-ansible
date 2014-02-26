@@ -1,0 +1,5 @@
+#!/bin/sh
+# post-receive hook
+{% if item.hook_post_receive %}
+{{ item.hook_post_receive }}
+{% endif %}

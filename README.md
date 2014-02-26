@@ -1,5 +1,5 @@
 # my-ansible
-Orchestration of my servers using Ansible.
+Ansible orchestration of php web servers
 
 # Installation
 Clone the repository
@@ -9,7 +9,7 @@ cd my-ansible
 ```
 
 
-You should use pip to install dependencies (virtualenv is recommended)
+Use pip to install dependencies (virtualenv is also recommended)
 ```bash
 pip install -r deps.txt
 ```
@@ -37,6 +37,13 @@ vim hosts
 [web]
 my-aws-host-or-something-like-this.com
 other-host.com
+
+[package]
+my-aws-host-or-something-like-this.com
+
+[git]
+my-aws-host-or-something-like-this.com
+my-git-host.whatever.com
 ```
 
 Then test your configuration
@@ -45,9 +52,9 @@ ansible all -m ping
 ```
 
 # Using
-Just run the playbook
+Just run the main playbook
 ```bash
-ansible-playbook playbook.yml
+ansible-playbook site.yml
 ```
 
 # Useful Commands
@@ -66,5 +73,6 @@ Get Vagrant remote_user
 ```bash
 vagrant ssh-config | grep 'User ' | awk '{print $2}'
 ```
+
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/EHER/my-ansible/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 

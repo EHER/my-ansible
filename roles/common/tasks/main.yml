@@ -1,0 +1,9 @@
+---
+- name: ensure apt cache is updated
+  action: apt update_cache=yes
+
+- name: ensure software-properties-common is installed
+  action: apt pkg=software-properties-common force=yes
+
+- name: ensure python-software-properties is installed
+  action: apt pkg=python-software-properties force=yes

@@ -1,0 +1,43 @@
+---
+# file: group_vars/web
+deploy_debian_channel: http://localhost /
+deploy_packages: []
+sites:
+  - name: packages
+    server_name: localhost
+    port: 80
+    root: /var/www/packages
+    php_enabled: false
+    php_params: empty
+
+  - name: queroservoluntario
+    server_name: queroservoluntario.com
+    port: 80
+    root: /var/www/queroservoluntario
+    php_enabled: true
+    php_params:
+      - SYMFONY__DATABASE__DRIVE fake_value
+      - SYMFONY__DATABASE__HOST fake_value
+      - SYMFONY__DATABASE__PORT fake_value
+      - SYMFONY__DATABASE__NAME fake_value
+      - SYMFONY__DATABASE__USER fake_value
+      - SYMFONY__DATABASE__PASSWORD fake_value
+      - SYMFONY__DATABASE__SOCKET fake_value
+      - SYMFONY__DATABASE__PATH fake_value
+      - SYMFONY__MAILER__TRANSPORT fake_value
+      - SYMFONY__MAILER__HOST fake_value
+      - SYMFONY__MAILER__PORT fake_value
+      - SYMFONY__MAILER__USER fake_value
+      - SYMFONY__MAILER__PASSWORD fake_value
+      - SYMFONY__MAILER__AUTH__MODE fake_value
+      - SYMFONY__MAILER__ENCRYPTION fake_value
+      - SYMFONY__FRAMEWORK__LOCALE fake_value
+      - SYMFONY__FRAMEWORK__SECRET fake_value
+      - SYMFONY__APONTADOR__API__BASEURL fake_value
+      - SYMFONY__APONTADOR__API__CONSUMERKEY fake_value
+      - SYMFONY__APONTADOR__API__CONSUMERSECRET fake_value
+      - SYMFONY__ADMIN__WEB__USER fake_value
+      - SYMFONY__ADMIN__WEB__PASSWORD fake_value
+      - SYMFONY__CONTACT__EMAIL fake_value
+
+

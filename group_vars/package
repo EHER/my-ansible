@@ -1,0 +1,7 @@
+---
+# file: group_vars/package
+packages:
+    - name: queroservoluntario
+      git_repo: /home/git/queroservoluntario.git
+      dest: /var/www/packages
+

@@ -1,0 +1,69 @@
+---
+- name: ensure repositories are registered
+  action: apt_repository repo={{ item }}
+  with_items: 
+    - ppa:ondrej/php5
+    - ppa:nginx/stable
+
+- name: ensure apt cache is updated
+  action: apt update_cache=yes
+
+- name: ensure packages are installed
+  action: apt pkg={{ item }} force=yes
+  with_items:
+    - php5
+    - php5-curl
+    - php5-intl
+    - nginx
+
+- name: ensure php timezone is configured
+  action: lineinfile dest=/etc/php5/cli/php.ini state=present line='date.timezone = GMT' regexp='/^date\.timezone/'
+
+- name: ensure apache2 is stopped
+  action: service name=apache2 state=stopped
+
+- name: ensure apache2 is absent
+  action: apt pkg=apache2 purge=yes
+
+- name: ensure nginx is running
+  action: service name=nginx state=started
+
+# conf
+- name: ensure configurations are present
+  action: template src=etc/nginx/sites-available/site_name.j2 dest=/etc/nginx/sites-available/{{ item.name }} owner=root group=root mode=0644
+  with_items: sites
+
+- name: ensure websites are enabled
+  action: file src=/etc/nginx/sites-available/{{ item.name }} dest=/etc/nginx/sites-enabled/{{ item.name }} state=link
+  with_items: sites
+
+- name: ensure directories exists
+  action: file path=/var/www/{{ item.name }} owner=root group=root mode=0775 state=directory
+  with_items: sites
+
+- name: ensure default website is disabled
+  action: file path=/etc/nginx/sites-enabled/default state=absent
+
+- name: ensure nginx is running
+  action: service name=nginx state=reloaded
+
+- name: ensure deploy debian channel is updated
+  action: shell dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz chdir=/var/www/packages
+  tags: deploy
+
+- name: ensure localhost apt software channel is configured
+  action: apt_repository repo='deb {{ deploy_debian_channel }}' state=present
+  tags: deploy
+
+- name: ensure localhost apt-src software channel is absent
+  action: apt_repository repo='deb-src {{ deploy_debian_channel }}' state=absent
+
+- name: ensure apt cache is updated
+  action: apt update_cache=yes
+  tags: deploy
+
+- name: ensure packages are deployed and updated
+  action: apt pkg={{ item }} state=latest force=yes
+  with_items: deploy_packages
+  tags: deploy
+

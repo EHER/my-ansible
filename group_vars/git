@@ -1,0 +1,8 @@
+---
+# file: group_vars/git
+repos:
+    - name: queroservoluntario
+      hook_post_receive: null
+      hook_pre_receive: null
+      hook_update: null
+

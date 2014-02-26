@@ -1,0 +1,25 @@
+---
+# file: site.yml
+- hosts: all
+  sudo: yes
+  tags: common
+  roles:
+    - common
+
+- hosts: web
+  sudo: yes
+  tags: web
+  roles:
+    - web
+
+- hosts: package
+  sudo: yes
+  tags: package
+  roles:
+    - package
+
+- hosts: git
+  sudo: yes
+  tags: git
+  roles:
+    - git
