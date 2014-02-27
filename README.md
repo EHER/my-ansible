@@ -61,7 +61,7 @@ ansible-playbook site.yml
 
 Add your private key to git user
 ```bash
-cat ~/.ssh/id_rsa.pub > files/home/git/.ssh/authorized_keys
+cat ~/.ssh/id_rsa.pub >> files/authorized_keys
 ```
 
 Get Vagrant private_key_file
