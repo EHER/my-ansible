@@ -1,0 +1,23 @@
+---
+- name: ensure configurations are present
+  action: template src=etc/nginx/sites-available/site_name.j2 dest=/etc/nginx/sites-available/{{ item.name }} owner=root group=root mode=0644
+  with_items: sites
+  tags: add_sites
+
+- name: ensure websites are enabled
+  action: file src=/etc/nginx/sites-available/{{ item.name }} dest=/etc/nginx/sites-enabled/{{ item.name }} state=link
+  with_items: sites
+  tags: add_sites
+
+- name: ensure directories exists
+  action: file path=/var/www/{{ item.name }} owner=root group=root mode=0775 state=directory
+  with_items: sites
+  tags: add_sites
+
+- name: ensure default website is disabled
+  action: file path=/etc/nginx/sites-enabled/default state=absent
+  tags: add_sites
+
+- name: reload nginx service
+  action: service name=nginx state=reloaded
+  tags: add_sites
