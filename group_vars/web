@@ -13,7 +13,7 @@ sites:
   - name: queroservoluntario
     server_name: queroservoluntario.com
     port: 80
-    root: /var/www/queroservoluntario
+    root: /var/www/queroservoluntario/web
     php_enabled: true
     php_params:
       - SYMFONY__DATABASE__DRIVE fake_value
