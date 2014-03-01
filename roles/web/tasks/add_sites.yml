@@ -9,8 +9,8 @@
   with_items: sites
   tags: add_sites
 
-- name: ensure directories exists
-  action: file path=/var/www/{{ item.name }} owner=root group=root mode=0775 state=directory
+- name: ensure web root directories exists and with right permissions
+  action: file path=/var/www/{{ item.name }} owner=root group=www-data mode=0777 state=directory
   with_items: sites
   tags: add_sites
 
