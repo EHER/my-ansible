@@ -1,0 +1,22 @@
+#!/bin/sh
+
+rm -rf /tmp/package
+mkdir -p /tmp/package
+cd /tmp/package
+
+case "$1" in
+    {% for package in packages %}
+    {{ package.name }})
+        git clone {{ package.git_repo }} {{ package.name }}
+        cd {{ package.name }}
+        chgrp -R www-data .
+        make config perms install perms
+        fpm -s dir -t deb -n {{ package.name }} --prefix /var/www/{{ package.name }} -v 1.0 --iteration $(date +"%Y%m%d%H%M%S") .
+        mv *.deb {{ package.dest }}
+        ;;
+    {% endfor %}
+    *)
+        echo "Usage: $0 <package name>"
+        exit 1
+esac
+
