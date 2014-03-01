@@ -6,11 +6,11 @@
   roles:
     - common
 
-- hosts: web
+- hosts: git
   sudo: yes
-  tags: web
+  tags: git
   roles:
-    - web
+    - git
 
 - hosts: package
   sudo: yes
@@ -18,8 +18,9 @@
   roles:
     - package
 
-- hosts: git
+- hosts: web
   sudo: yes
-  tags: git
+  tags: web
   roles:
-    - git
+    - web
+
