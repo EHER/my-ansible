@@ -1,7 +1,7 @@
 ---
 # file: group_vars/web
 deploy_debian_channel: http://localhost /
-deploy_packages: []
+deploy_packages: [queroservoluntario]
 sites:
   - name: packages
     server_name: localhost
