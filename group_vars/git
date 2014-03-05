@@ -2,7 +2,7 @@
 # file: group_vars/git
 repos:
     - name: queroservoluntario
-      hook_post_receive: null
+      hook_post_receive: pack.sh queroservoluntario
       hook_pre_receive: null
       hook_update: null
 
