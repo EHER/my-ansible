@@ -1,4 +1,9 @@
 ---
+- name: ensure deploy packages are available
+  action: shell pack.sh {{ item }} > /var/www/packages/{{ item }}.log creates=/var/www/packages/{{ item }}.log
+  with_items: deploy_packages
+  tags: deploy
+
 - name: ensure deploy debian channel is updated
   action: shell dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz chdir=/var/www/packages
   tags: deploy
