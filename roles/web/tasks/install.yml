@@ -16,11 +16,25 @@
     - php5
     - php5-curl
     - php5-intl
+    - php5-fpm
     - nginx
   tags: install
 
+  # Bug: it duplicates the line
 - name: ensure php timezone is configured
-  action: lineinfile dest=/etc/php5/cli/php.ini state=present line='date.timezone = GMT' regexp='/^date\.timezone/'
+  action: lineinfile dest={{ item }} state=present line='date.timezone = GMT' regexp='/date.timezone\ *=/'
+  with_items:
+    - /etc/php5/cli/php.ini
+    - /etc/php5/fpm/php.ini
+  tags: install
+
+  # Bug: it duplicates the line
+- name: ensure php timezone is configured
+- name: ensure php version is hiden
+  action: lineinfile dest={{ item }} state=present line='expose_php = off' regexp='/expose_php\ *=/'
+  with_items:
+    - /etc/php5/cli/php.ini
+    - /etc/php5/fpm/php.ini
   tags: install
 
 - name: ensure apache2 is stopped
