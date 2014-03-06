@@ -29,7 +29,6 @@
   tags: install
 
   # Bug: it duplicates the line
-- name: ensure php timezone is configured
 - name: ensure php version is hiden
   action: lineinfile dest={{ item }} state=present line='expose_php = off' regexp='/expose_php\ *=/'
   with_items:

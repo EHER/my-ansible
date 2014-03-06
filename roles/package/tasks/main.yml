@@ -23,8 +23,6 @@
 - name: ensure fpm gem is installed
  #action: gem name=fpm user_install=no state=latest
   action: command gem install fpm creates=/usr/local/bin/fpm
-  tags: gem
 
 - name: ensure package script
   action: template src=pack.sh.j2 dest=/usr/local/bin/pack.sh mode=0755
-  tags: script
