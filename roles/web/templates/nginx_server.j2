@@ -2,21 +2,15 @@ server {
     listen {{ item.port }};
     server_name {{ item.server_name }} www.{{ item.server_name }};
     root {{ item.root }};
-
-    {% if item.php_enabled %}
-    try_files $uri $uri/ /index.php?$args;
-
+{% if item.php_enabled %}
+    try_files $uri /index.php?$args /app.php?$args;
     location ~ \.php$ {
         fastcgi_pass unix:/var/run/php5-fpm.sock;
-
-        {% for param in item.php_params %}
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+{% for param in item.php_params %}
         fastcgi_param {{ param }};
-        {% endfor %}
+{% endfor %}
     }
-    {% endif %}
-
-    server_tokens off;
-
-    gzip on;
-    gzip_disable "msie6";
+{% endif %}
 }

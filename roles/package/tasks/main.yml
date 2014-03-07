@@ -24,5 +24,8 @@
  #action: gem name=fpm user_install=no state=latest
   action: command gem install fpm creates=/usr/local/bin/fpm
 
+- name: ensure packages build directory exists
+  action: file path={{ packages_path }} mode=0777 state=directory
+
 - name: ensure package script
   action: template src=pack.sh.j2 dest=/usr/local/bin/pack.sh mode=0755

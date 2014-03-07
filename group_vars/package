@@ -1,7 +1,9 @@
 ---
 # file: group_vars/package
+packages_path: /tmp/packages
 packages:
     - name: queroservoluntario
       git_repo: /home/git/queroservoluntario.git
       dest: /var/www/packages
+      build_command: make dummy-config install
 

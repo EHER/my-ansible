@@ -1,23 +1,23 @@
 #!/bin/sh
 
-mkdir -p /tmp/package
-chmod 777 /tmp/package
-cd /tmp/package
-
 case "$1" in
     {% for package in packages %}
     {{ package.name }})
-        git clone {{ package.git_repo }} {{ package.name }}
-        cd {{ package.name }}
-        chgrp -R www-data .
-        make config perms install perms
+        git clone {{ package.git_repo }} {{ packages_path }}/{{ package.name }}
+        cd {{ packages_path }}/{{ package.name }}
+        {{ package.build_command }}
         fpm -s dir -t deb -n {{ package.name }} --prefix /var/www/{{ package.name }} -v 1.0 --iteration $(date +"%Y%m%d%H%M%S") .
         mv *.deb {{ package.dest }}
-        rm -rf /tmp/package/{{ package.name }}
+        rm -rf {{ packages_path }}/{{ package.name }}
         ;;
     {% endfor %}
     *)
         echo "Usage: $0 <package name>"
+        echo ""
+        echo "Packages available: "
+{% for package in packages %}
+        echo "\t - {{ package.name }}"
+{% endfor %}
         exit 1
 esac
 

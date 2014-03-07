@@ -8,7 +8,14 @@ sites:
     port: 80
     root: /var/www/packages
     php_enabled: false
-    php_params: empty
+    php_params: []
+
+  - name: eher
+    server_name: eher.com.br
+    port: 80
+    root: /var/www/eher
+    php_enabled: true
+    php_params: []
 
   - name: queroservoluntario
     server_name: queroservoluntario.com

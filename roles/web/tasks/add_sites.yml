@@ -1,6 +1,6 @@
 ---
 - name: ensure configurations are present
-  action: template src=etc/nginx/sites-available/site_name.j2 dest=/etc/nginx/sites-available/{{ item.name }} owner=root group=root mode=0644
+  action: template src=nginx_server.j2 dest=/etc/nginx/sites-available/{{ item.name }} owner=root group=root mode=0644
   with_items: sites
   tags: add_sites
 
