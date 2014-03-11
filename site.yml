@@ -6,6 +6,12 @@
   roles:
     - common
 
+- hosts: mysql
+  sudo: yes
+  tags: mysql
+  roles:
+    - mysql
+
 - hosts: git
   sudo: yes
   tags: git

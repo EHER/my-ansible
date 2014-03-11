@@ -3,12 +3,13 @@
 case "$1" in
     {% for package in packages %}
     {{ package.name }})
-        git clone {{ package.git_repo }} {{ packages_path }}/{{ package.name }}
-        cd {{ packages_path }}/{{ package.name }}
-        {{ package.build_command }}
+        git clone {{ package.git_repo }} {{ build_path }}/{{ package.name }}
+        cd {{ build_path }}/{{ package.name }}
+        git checkout {{ package.git_branch|default('master') }}
+        {{ package.build_command|default('make install') }}
         fpm -s dir -t deb -n {{ package.name }} --prefix /var/www/{{ package.name }} -v 1.0 --iteration $(date +"%Y%m%d%H%M%S") .
-        mv *.deb {{ package.dest }}
-        rm -rf {{ packages_path }}/{{ package.name }}
+        mv *.deb {{ packages_path }}
+        rm -rf {{ build_path }}/{{ package.name }}
         ;;
     {% endfor %}
     *)

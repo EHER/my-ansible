@@ -6,3 +6,8 @@ repos:
       hook_pre_receive: null
       hook_update: null
 
+    - name: meublog
+      hook_post_receive: pack.sh meublog
+      hook_pre_receive: null
+      hook_update: null
+

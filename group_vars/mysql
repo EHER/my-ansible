@@ -1,0 +1,1 @@
+root_db_password: "{{ lookup('password', '../../../credentials/root_db_password length=32') }}"

@@ -1,9 +1,14 @@
 ---
 # file: group_vars/package
-packages_path: /tmp/packages
+build_path: /tmp/packages
+packages_path: /var/www/packages
 packages:
     - name: queroservoluntario
       git_repo: /home/git/queroservoluntario.git
-      dest: /var/www/packages
-      build_command: make dummy-config install
+      git_branch: master
+      build_command: make dummy-config install config
 
+    - name: meublog
+      git_repo: /home/git/meublog.git
+      git_branch: Eher
+      build_command: make install
