@@ -10,6 +10,10 @@
   action: apt update_cache=yes
   tags: install
 
+- name: remove apache if installed
+  apt: pkg=apache2 state=absent
+  tags: install
+
 - name: ensure packages are installed
   action: apt pkg={{ item }} force=yes
   with_items:
