@@ -33,21 +33,18 @@ sites:
     root: /var/www/queroservoluntario/web
     php_enabled: true
     php_params:
-      - SYMFONY__DATABASE__DRIVE pdo_mysql
-      - SYMFONY__DATABASE__HOST ~
-      - SYMFONY__DATABASE__PORT ~
+      - SYMFONY__DATABASE__DRIVER pdo_mysql
       - SYMFONY__DATABASE__NAME queroservoluntario
       - SYMFONY__DATABASE__USER root
       - SYMFONY__DATABASE__PASSWORD "{{ root_db_password }}"
       - SYMFONY__DATABASE__SOCKET /var/run/mysqld/mysqld.sock
-      - SYMFONY__DATABASE__PATH fake_value
       - SYMFONY__MAILER__TRANSPORT smtp
       - SYMFONY__MAILER__HOST fake_value
       - SYMFONY__MAILER__PORT fake_value
       - SYMFONY__MAILER__USER fake_value
       - SYMFONY__MAILER__PASSWORD fake_value
       - SYMFONY__MAILER__AUTH__MODE login
-      - SYMFONY__MAILER__ENCRYPTION tsl
+      - SYMFONY__MAILER__ENCRYPTION tls
       - SYMFONY__FRAMEWORK__LOCALE en
       - SYMFONY__FRAMEWORK__SECRET "{{ framework_secret }}"
       - SYMFONY__APONTADOR__API__BASEURL "http://api.apontador.com/v1/"
