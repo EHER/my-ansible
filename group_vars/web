@@ -10,6 +10,7 @@ sites:
     server_name: localhost
     port: 80
     root: /var/www/packages
+    has_mysql_db: false
     php_enabled: false
     php_params: []
 
@@ -17,6 +18,8 @@ sites:
     server_name: eher.com.br
     port: 80
     root: /var/www/eher
+    has_mysql_db: true
+    mysql_user: blog_eher
     php_enabled: true
     php_params: []
 
@@ -24,6 +27,8 @@ sites:
     server_name: meublog.com
     port: 80
     root: /var/www/meublog
+    has_mysql_db: true
+    mysql_user: meu_blog
     php_enabled: true
     php_params: []
 
@@ -31,13 +36,18 @@ sites:
     server_name: queroservoluntario.com
     port: 80
     root: /var/www/queroservoluntario/web
+    has_mysql_db: true
+    mysql_user: qsvoluntario
     php_enabled: true
     php_params:
       - SYMFONY__DATABASE__DRIVER pdo_mysql
+      - SYMFONY__DATABASE__HOST ""
+      - SYMFONY__DATABASE__PORT ~
       - SYMFONY__DATABASE__NAME queroservoluntario
-      - SYMFONY__DATABASE__USER root
-      - SYMFONY__DATABASE__PASSWORD "{{ root_db_password }}"
+      - SYMFONY__DATABASE__USER qsvoluntario
+      - SYMFONY__DATABASE__PASSWORD "{{ lookup('password', '../../../credentials/queroservoluntario/mysql_password }}"
       - SYMFONY__DATABASE__SOCKET /var/run/mysqld/mysqld.sock
+      - SYMFONY__DATABASE__PATH ./db
       - SYMFONY__MAILER__TRANSPORT smtp
       - SYMFONY__MAILER__HOST fake_value
       - SYMFONY__MAILER__PORT fake_value
