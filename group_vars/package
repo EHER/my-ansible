@@ -11,4 +11,3 @@ packages:
     - name: meublog
       git_repo: /home/git/meublog.git
       git_branch: Eher
-      build_command: make install

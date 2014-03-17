@@ -45,7 +45,7 @@ sites:
       - SYMFONY__DATABASE__PORT ~
       - SYMFONY__DATABASE__NAME queroservoluntario
       - SYMFONY__DATABASE__USER qsvoluntario
-      - SYMFONY__DATABASE__PASSWORD "{{ lookup('password', '../../../credentials/queroservoluntario/mysql_password }}"
+      - SYMFONY__DATABASE__PASSWORD "{{ queroservoluntario_mysql_password }}"
       - SYMFONY__DATABASE__SOCKET /var/run/mysqld/mysqld.sock
       - SYMFONY__DATABASE__PATH ./db
       - SYMFONY__MAILER__TRANSPORT smtp
@@ -56,13 +56,16 @@ sites:
       - SYMFONY__MAILER__AUTH__MODE login
       - SYMFONY__MAILER__ENCRYPTION tls
       - SYMFONY__FRAMEWORK__LOCALE en
-      - SYMFONY__FRAMEWORK__SECRET "{{ framework_secret }}"
+      - SYMFONY__FRAMEWORK__SECRET {{ framework_secret }}
       - SYMFONY__APONTADOR__API__BASEURL "http://api.apontador.com/v1/"
       - SYMFONY__APONTADOR__API__CONSUMERKEY fake_value
       - SYMFONY__APONTADOR__API__CONSUMERSECRET fake_value
       - SYMFONY__ADMIN__WEB__USER admin
       - SYMFONY__ADMIN__WEB__PASSWORD "{{ queroservoluntario_admin_password }}"
-      - SYMFONY__CONTACT__EMAIL "tequeremosvoluntario@gmail.com"
+      - SYMFONY__CONTACT__EMAIL tequeremosvoluntario@gmail.com
 
 framework_secret: "{{ lookup('password', '../../../credentials/queroservoluntario/framework_secret length=32') }}"
 queroservoluntario_admin_password: "{{ lookup('password', '../../../credentials/queroservoluntario/admin_password length=5') }}"
+queroservoluntario_mysql_password: "{{ lookup('password', '../../../credentials/queroservoluntario/mysql_password length=15') }}"
+
+

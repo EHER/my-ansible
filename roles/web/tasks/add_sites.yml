@@ -2,10 +2,11 @@
 - name: create mysql databases
   action: mysql_db name={{ item.name }} state=present
   with_items: sites
+  when: item.has_mysql_db == True
   tags: add_sites
 
 - name: create mysql users
-  action: mysql_user name={{ item.mysql_user }} priv=*.*:ALL state=present password="{{ lookup('password', '../../../credentials/' + item.name + '/mysql_password length=15') }}"
+  action: mysql_user name={{ item.mysql_user }} priv={{ item.name }}.*:ALL state=present password="{{ lookup('password', '../../../credentials/' + item.name + '/mysql_password length=15') }}"
   with_items: sites
   when: item.has_mysql_db == True
   tags: add_sites
