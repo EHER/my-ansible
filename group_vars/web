@@ -23,6 +23,14 @@ sites:
     php_enabled: true
     php_params: []
 
+  - name: chegamos
+    server_name: chegamos.com
+    port: 80
+    root: /var/www/chegamos
+    has_mysql_db: false
+    php_enabled: true
+    php_params: []
+
   - name: meublog
     server_name: meublog.com
     port: 80
@@ -30,6 +38,14 @@ sites:
     has_mysql_db: true
     mysql_user: meu_blog
     php_enabled: true
+    php_params: []
+
+  - name: paginasbrancas
+    server_name: paginasbrancas.com.br
+    port: 80
+    root: /var/www/paginasbrancas
+    has_mysql_db: false
+    php_enabled: false
     php_params: []
 
   - name: queroservoluntario
@@ -49,23 +65,26 @@ sites:
       - SYMFONY__DATABASE__SOCKET /var/run/mysqld/mysqld.sock
       - SYMFONY__DATABASE__PATH ./db
       - SYMFONY__MAILER__TRANSPORT smtp
-      - SYMFONY__MAILER__HOST fake_value
-      - SYMFONY__MAILER__PORT fake_value
-      - SYMFONY__MAILER__USER fake_value
-      - SYMFONY__MAILER__PASSWORD fake_value
+      - SYMFONY__MAILER__HOST email-smtp.us-east-1.amazonaws.com
+      - SYMFONY__MAILER__PORT 587
+      - SYMFONY__MAILER__USER {{ queroservoluntario_aws_mail_user }}
+      - SYMFONY__MAILER__PASSWORD {{ queroservoluntario_aws_mail_password }}
       - SYMFONY__MAILER__AUTH__MODE login
       - SYMFONY__MAILER__ENCRYPTION tls
       - SYMFONY__FRAMEWORK__LOCALE en
       - SYMFONY__FRAMEWORK__SECRET {{ framework_secret }}
-      - SYMFONY__APONTADOR__API__BASEURL "http://api.apontador.com/v1/"
-      - SYMFONY__APONTADOR__API__CONSUMERKEY fake_value
-      - SYMFONY__APONTADOR__API__CONSUMERSECRET fake_value
+      - SYMFONY__APONTADOR__API__BASEURL "http://api.apontador.com.br/v1/"
+      - SYMFONY__APONTADOR__API__CONSUMERKEY {{ queroservoluntario_apontador_api_key }}
+      - SYMFONY__APONTADOR__API__CONSUMERSECRET {{ queroservoluntario_apontador_api_secret }}
       - SYMFONY__ADMIN__WEB__USER admin
-      - SYMFONY__ADMIN__WEB__PASSWORD "{{ queroservoluntario_admin_password }}"
+      - SYMFONY__ADMIN__WEB__PASSWORD {{ queroservoluntario_admin_password }}
       - SYMFONY__CONTACT__EMAIL tequeremosvoluntario@gmail.com
 
 framework_secret: "{{ lookup('password', '../../../credentials/queroservoluntario/framework_secret length=32') }}"
 queroservoluntario_admin_password: "{{ lookup('password', '../../../credentials/queroservoluntario/admin_password length=5') }}"
 queroservoluntario_mysql_password: "{{ lookup('password', '../../../credentials/queroservoluntario/mysql_password length=15') }}"
-
+queroservoluntario_apontador_api_key: "{{ lookup('password', '../../../credentials/queroservoluntario/apontador_api_key') }}"
+queroservoluntario_apontador_api_secret: "{{ lookup('password', '../../../credentials/queroservoluntario/apontador_api_secret') }}"
+queroservoluntario_aws_mail_user: "{{ lookup('password', '../../../credentials/queroservoluntario/aws_mail_user') }}"
+queroservoluntario_aws_mail_password: "{{ lookup('password', '../../../credentials/queroservoluntario/aws_mail_password') }}"
 

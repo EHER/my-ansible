@@ -3,11 +3,12 @@
 build_path: /tmp/packages
 packages_path: /var/www/packages
 packages:
+    - name: meublog
+      git_repo: /home/git/meublog.git
+      git_branch: Eher
+
     - name: queroservoluntario
       git_repo: /home/git/queroservoluntario.git
       git_branch: master
       build_command: make dummy-config install config
 
-    - name: meublog
-      git_repo: /home/git/meublog.git
-      git_branch: Eher

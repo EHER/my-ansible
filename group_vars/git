@@ -1,13 +1,19 @@
 ---
 # file: group_vars/git
 repos:
-    - name: queroservoluntario
-      hook_post_receive: pack.sh queroservoluntario
-      hook_pre_receive: null
-      hook_update: null
+    - name: eher
+      hook_post_receive: pack.sh eher
+
+    - name: chegamos
+      hook_post_receive: pack.sh chegamos
 
     - name: meublog
       hook_post_receive: pack.sh meublog
-      hook_pre_receive: null
-      hook_update: null
+
+    - name: paginabrancas
+      hook_post_receive: pack.sh paginabrancas
+
+    - name: queroservoluntario
+      hook_post_receive: pack.sh queroservoluntario
+
 
