@@ -1,6 +1,8 @@
 .Python
 .vagrant
 vagrant_ansible_inventory_default
+stage
+production
 bin/
 include/
 lib/
