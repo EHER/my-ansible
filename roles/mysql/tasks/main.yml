@@ -16,10 +16,10 @@
 - name: update mysql root password for all root accounts
   action: mysql_user name=root host={{ item }} password={{ root_db_password }}
   with_items:
-    - $ansible_hostname
     - 127.0.0.1
     - ::1
     - localhost
+    - $ansible_hostname
   tags: config
 
 - name: copy .my.cnf file with root password credentials
@@ -31,6 +31,7 @@
   with_items:
     - localhost
     - $inventory_hostname
+    - $ansible_hostname
   tags: config
 
 - name: remove the test database
