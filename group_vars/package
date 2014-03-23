@@ -3,9 +3,18 @@
 build_path: /tmp/packages
 packages_path: /var/www/packages
 packages:
+    - name: chegamos
+      git_repo: /home/git/chegamos.git
+
+    - name: eher
+      git_repo: /home/git/eher.git
+
     - name: meublog
       git_repo: /home/git/meublog.git
       git_branch: Eher
+
+    - name: paginasbrancas
+      git_repo: /home/git/paginasbrancas.git
 
     - name: queroservoluntario
       git_repo: /home/git/queroservoluntario.git

@@ -20,6 +20,7 @@
     - ::1
     - localhost
     - $ansible_hostname
+  ignore_errors: yes
   tags: config
 
 - name: copy .my.cnf file with root password credentials

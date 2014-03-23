@@ -10,8 +10,8 @@ repos:
     - name: meublog
       hook_post_receive: pack.sh meublog
 
-    - name: paginabrancas
-      hook_post_receive: pack.sh paginabrancas
+    - name: paginasbrancas
+      hook_post_receive: pack.sh paginasbrancas
 
     - name: queroservoluntario
       hook_post_receive: pack.sh queroservoluntario

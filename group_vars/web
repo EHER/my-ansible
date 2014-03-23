@@ -2,14 +2,18 @@
 # file: group_vars/web
 deploy_debian_channel: http://localhost /
 deploy_packages:
-    - queroservoluntario
+    - chegamos
+    - eher
     - meublog
+    - paginasbrancas
+    - queroservoluntario
 
 sites:
   - name: packages
     server_name: localhost
     port: 80
     root: /var/www/packages
+    rewrite: []
     has_mysql_db: false
     php_enabled: false
     php_params: []
@@ -17,7 +21,8 @@ sites:
   - name: eher
     server_name: eher.com.br
     port: 80
-    root: /var/www/eher
+    root: /var/www/eher/wordpress
+    rewrite: []
     has_mysql_db: true
     mysql_user: blog_eher
     php_enabled: true
@@ -26,7 +31,12 @@ sites:
   - name: chegamos
     server_name: chegamos.com
     port: 80
-    root: /var/www/chegamos
+    root: /var/www/chegamos/app/webroot
+    try_files: "$uri $uri/ /index.php?url=$uri&$args"
+    rewrite:
+      - /css/main.css /min/?g=css
+      - /js/head.js /min/?g=js_head
+      - /js/body.js /min/?g=js_body
     has_mysql_db: false
     php_enabled: true
     php_params: []
@@ -35,6 +45,7 @@ sites:
     server_name: meublog.com
     port: 80
     root: /var/www/meublog
+    rewrite: []
     has_mysql_db: true
     mysql_user: meu_blog
     php_enabled: true
@@ -43,15 +54,18 @@ sites:
   - name: paginasbrancas
     server_name: paginasbrancas.com.br
     port: 80
-    root: /var/www/paginasbrancas
+    root: /var/www/paginasbrancas/WebContent
+    rewrite: []
     has_mysql_db: false
-    php_enabled: false
+    php_enabled: true
     php_params: []
 
   - name: queroservoluntario
     server_name: queroservoluntario.com
     port: 80
     root: /var/www/queroservoluntario/web
+    try_files: "$uri $uri/ /app.php?args"
+    rewrite: []
     has_mysql_db: true
     mysql_user: qsvoluntario
     php_enabled: true
