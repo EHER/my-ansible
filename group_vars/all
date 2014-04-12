@@ -1,0 +1,10 @@
+---
+framework_secret: "{{ lookup('password', '../../../credentials/queroservoluntario/framework_secret length=32') }}"
+queroservoluntario_admin_password: "{{ lookup('password', '../../../credentials/queroservoluntario/admin_password length=5') }}"
+queroservoluntario_mysql_password: "{{ lookup('password', '../../../credentials/queroservoluntario/mysql_password length=15') }}"
+queroservoluntario_apontador_api_key: "{{ lookup('password', '../../../credentials/queroservoluntario/apontador_api_key') }}"
+queroservoluntario_apontador_api_secret: "{{ lookup('password', '../../../credentials/queroservoluntario/apontador_api_secret') }}"
+queroservoluntario_aws_mail_user: "{{ lookup('password', '../../../credentials/queroservoluntario/aws_mail_user') }}"
+queroservoluntario_aws_mail_password: "{{ lookup('password', '../../../credentials/queroservoluntario/aws_mail_password') }}"
+
+

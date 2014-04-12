@@ -1,1 +1,1 @@
-root_db_password: "{{ lookup('password', '../../../credentials/root_db_password length=32') }}"
+root_db_password: "{{ lookup('password', '../../../credentials/mysql/root_password length=32') }}"

@@ -25,7 +25,7 @@
   action: command gem install fpm creates=/usr/local/bin/fpm
 
 - name: ensure packages build directory exists
-  action: file path={{ build_path }} mode=0777 state=directory
+  action: file path={{ eher_package_build_path }} mode=0777 state=directory
 
 - name: ensure package script
-  action: template src=pack.sh.j2 dest=/usr/local/bin/pack.sh mode=0755
+  action: template src=pack.sh.j2 dest=/usr/local/bin/pack_{{ eher_package_name }}.sh mode=0755

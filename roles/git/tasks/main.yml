@@ -9,17 +9,13 @@
   action: copy src=files/authorized_keys dest=/home/git/.ssh/authorized_keys owner=git mode=0600
 
 - name: ensure repository directories exists
-  action: file path=/home/git/{{ item.name }}.git owner=git group=git mode=0775 state=directory
-  with_items: repos
+  action: file path=/home/git/{{ eher_git_name }}.git owner=git group=git mode=0775 state=directory
 
 - name: create repositories
-  action: command chdir=/home/git/{{ item.name }}.git creates=/home/git/{{ item.name }}.git/HEAD git init --bare
-  with_items: repos
+  action: command chdir=/home/git/{{ eher_git_name }}.git creates=/home/git/{{ eher_git_name }}.git/HEAD git init --bare
 
 - name: ensure repositories permisions
-  action: command chdir=/home/git/{{ item.name }}.git chown git.git -R .
-  with_items: repos
+  action: command chdir=/home/git/{{ eher_git_name }}.git chown git.git -R .
 
 - name: ensure post-receive hooks exists
-  action: template src=hooks/post-receive.j2 dest=/home/git/{{ item.name }}.git/hooks/post-receive owner=git mode=0755
-  with_items: repos
+  action: template src=hooks/post-receive.j2 dest=/home/git/{{ eher_git_name }}.git/hooks/post-receive owner=git mode=0755

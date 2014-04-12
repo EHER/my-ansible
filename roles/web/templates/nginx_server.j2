@@ -1,8 +1,8 @@
 server {
-    listen {{ item.port }};
-    server_name {{ item.server_name }} www.{{ item.server_name }};
-    root {{ item.root }};
-{% for rewrite_rule in item.rewrite %}
+    listen {{ eher_web_port|default(80) }};
+    server_name {{ eher_web_server_name }} www.{{ eher_web_server_name }};
+    root {{ eher_web_root|default('/var/www/' + eher_web_name) }};
+{% for rewrite_rule in eher_web_rewrite %}
     rewrite {{ rewrite_rule }};
 {% endfor %}
 
@@ -10,7 +10,7 @@ server {
         expires max;
         log_not_found off;
     }
-{% if item.php_enabled %}
+{% if eher_web_php_enabled %}
 
     index index.php app.php index.html;
 
@@ -26,7 +26,7 @@ server {
     }
 
     location / {
-        try_files {{ item.try_files|default('$uri $uri/ /index.php?$args') }};
+        try_files {{ eher_web_try_files|default('$uri $uri/ /index.php?$args') }};
     }
 
     location ~ \.php$ {
@@ -34,7 +34,7 @@ server {
         fastcgi_pass unix:/var/run/php5-fpm.sock;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
-{% for param in item.php_params %}
+{% for param in eher_web_php_params %}
         fastcgi_param {{ param }};
 {% endfor %}
     }

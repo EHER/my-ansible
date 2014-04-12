@@ -1,0 +1,16 @@
+#!/bin/sh
+
+git clone {{ eher_package_git_repo }} {{ eher_package_build_path }}/{{ eher_package_name }}
+cd {{ eher_package_build_path }}/{{ eher_package_name }}
+
+git checkout {{ eher_package_git_branch|default('master') }}
+
+{{ eher_package_build_command|default('') }}
+
+fpm -s dir -t deb -n {{ eher_package_name }} --prefix /var/www/{{ eher_package_name }} -v 1.0 --iteration $(date +"%Y%m%d%H%M%S") .
+mv *.deb {{ eher_package_web_path }}
+
+cd /var/www/packages
+dpkg-scanpackages -m . /dev/null | gzip -9c > Packages.gz
+
+rm -rf {{ eher_package_build_path }}/{{ eher_package_name }}

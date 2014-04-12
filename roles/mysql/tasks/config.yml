@@ -1,0 +1,35 @@
+# 'localhost' needs to be the last item for idempotency, see
+# http://ansible.cc/docs/modules.html#mysql-user
+- name: update mysql root password for all root accounts
+  action: mysql_user name=root host={{ item }} password={{ root_db_password }}
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+    - $ansible_hostname
+  ignore_errors: yes
+  tags: config
+
+- name: copy .my.cnf file with root password credentials
+  action: template src=root/.my.cnf.j2 dest=/root/.my.cnf owner=root mode=0600
+  tags: config
+
+- name: ensure anonymous users are not in the database
+  action: mysql_user name='' host={{ item }} state=absent
+  with_items:
+    - localhost
+    - $inventory_hostname
+    - $ansible_hostname
+  tags: config
+
+- name: remove the test database
+  action: mysql_db name=test state=absent
+  tags: config
+
+- name: create mysql databases
+  action: mysql_db name={{ eher_mysql_db }} state=present
+  tags: config
+
+- name: create mysql users
+  action: mysql_user name={{ eher_mysql_user }} priv={{ eher_mysql_db }}.*:ALL state=present password="{{ lookup('password', '../../../credentials/mysql/' + eher_mysql_db + '/' + eher_mysql_user + '_password length=15') }}"
+  tags: config

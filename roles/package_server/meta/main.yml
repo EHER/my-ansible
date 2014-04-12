@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: web, eher_web_name: 'packages', eher_web_server_name: eher_package_server_name|default('localhost'), eher_web_port: eher_package_port, eher_web_root: '/var/www/packages', eher_web_rewrite: [], eher_web_php_enabled: false, eher_web_php_params: [] }
+  - { role: git, eher_git_name: "{{ eher_package_name }}", eher_git_hook_post_receive: "pack_{{ eher_package_name }}.sh" }

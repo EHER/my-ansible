@@ -10,23 +10,127 @@
   sudo: yes
   tags: mysql
   roles:
-    - mysql
+      - role: mysql
+        eher_mysql_db: 'eher'
+        eher_mysql_user: 'blog_eher'
 
-- hosts: git
-  sudo: yes
-  tags: git
-  roles:
-    - git
+      - role: mysql
+        eher_mysql_db: 'queroservoluntario'
+        eher_mysql_user: 'qservoluntario'
 
-- hosts: package
+- hosts: package_server
   sudo: yes
-  tags: package
+  tags: package_server
   roles:
-    - package
+      - role: package_server
+        eher_package_name: 'chegamos'
+        eher_package_git_repo: '/home/git/chegamos.git'
+        eher_package_build_command: 'make install'
+
+      - role: package_server
+        eher_package_name: 'eher'
+        eher_package_git_branch: 'Eher'
+        eher_package_git_repo: '/home/git/eher.git'
+
+      - role: package_server
+        eher_package_name: 'meublog'
+        eher_package_git_repo: '/home/git/meublog.git'
+
+      - role: package_server
+        eher_package_name: 'paginasbrancas'
+        eher_package_git_repo: '/home/git/paginasbrancas.git'
+
+      - role: package_server
+        eher_package_name: 'queroservoluntario'
+        eher_package_git_repo: '/home/git/queroservoluntario.git'
+        eher_package_build_command: 'make dummy-config install config'
+
+- hosts: package_client
+  sudo: yes
+  tags: package_client
+  roles:
+      - { role: package_client, eher_package_name: 'chegamos' }
+      - { role: package_client, eher_package_name: 'eher' }
+      - { role: package_client, eher_package_name: 'meublog' }
+      - { role: package_client, eher_package_name: 'paginasbrancas' }
+      - { role: package_client, eher_package_name: 'queroservoluntario' }
 
 - hosts: web
   sudo: yes
   tags: web
   roles:
-    - web
+      - role: web
+        eher_web_name: 'queroservoluntario'
+        eher_web_server_name: 'queroservoluntario.com'
+        eher_web_root: '/var/www/queroservoluntario/web'
+        eher_web_rewrite: []
+        eher_web_php_enabled: true
+        eher_web_php_params: []
 
+      - role: web
+        eher_web_name: eher
+        eher_web_server_name: eher.com.br
+        eher_web_root: /var/www/eher/wordpress
+        eher_web_rewrite: []
+        eher_web_php_enabled: true
+        eher_web_php_params: []
+
+      - role: web
+        eher_web_name: chegamos
+        eher_web_server_name: chegamos.com
+        eher_web_root: /var/www/chegamos/app/webroot
+        eher_web_try_files: "$uri $uri/ /index.php?url=$uri&$args"
+        eher_web_rewrite:
+          - /css/main.css /min/?g=css
+          - /js/head.js /min/?g=js_head
+          - /js/body.js /min/?g=js_body
+        eher_eher_php_enabled: true
+        eher_eher_php_params: []
+
+      - role: web
+        eher_web_name: meublog
+        eher_web_server_name: meublog.com
+        eher_web_root: /var/www/meublog
+        eher_web_rewrite: []
+        eher_web_php_enabled: true
+        eher_web_php_params: []
+
+      - role: web
+        eher_web_name: paginasbrancas
+        eher_web_server_name: paginasbrancas.com.br
+        eher_web_root: /var/www/paginasbrancas/WebContent
+        eher_web_rewrite: []
+        eher_web_php_enabled: true
+        eher_web_php_params: []
+
+      - role: web
+        eher_web_name: queroservoluntario
+        eher_web_server_name: queroservoluntario.com
+        eher_web_root: /var/www/queroservoluntario/web
+        eher_web_try_files: "$uri $uri/ /app.php?args"
+        eher_web_rewrite: []
+        eher_web_php_enabled: true
+        eher_web_php_params:
+          - SYMFONY__DATABASE__DRIVER pdo_mysql
+          - SYMFONY__DATABASE__HOST ""
+          - SYMFONY__DATABASE__PORT ~
+          - SYMFONY__DATABASE__NAME queroservoluntario
+          - SYMFONY__DATABASE__USER qsvoluntario
+          - SYMFONY__DATABASE__PASSWORD "{{ queroservoluntario_mysql_password }}"
+          - SYMFONY__DATABASE__SOCKET /var/run/mysqld/mysqld.sock
+          - SYMFONY__DATABASE__PATH ./db
+          - SYMFONY__MAILER__TRANSPORT smtp
+          - SYMFONY__MAILER__HOST email-smtp.us-east-1.amazonaws.com
+          - SYMFONY__MAILER__PORT 587
+          - SYMFONY__MAILER__USER {{ queroservoluntario_aws_mail_user }}
+          - SYMFONY__MAILER__PASSWORD {{ queroservoluntario_aws_mail_password }}
+          - SYMFONY__MAILER__AUTH__MODE login
+          - SYMFONY__MAILER__ENCRYPTION tls
+          - SYMFONY__FRAMEWORK__LOCALE en
+          - SYMFONY__FRAMEWORK__SECRET {{ framework_secret }}
+          - SYMFONY__APONTADOR__API__BASEURL "http://api.apontador.com.br/v1/"
+          - SYMFONY__APONTADOR__API__CONSUMERKEY {{ queroservoluntario_apontador_api_key }}
+          - SYMFONY__APONTADOR__API__CONSUMERSECRET {{ queroservoluntario_apontador_api_secret }}
+          - SYMFONY__ADMIN__WEB__USER admin
+          - SYMFONY__ADMIN__WEB__PASSWORD {{ queroservoluntario_admin_password }}
+          - SYMFONY__CONTACT__EMAIL tequeremosvoluntario@gmail.com

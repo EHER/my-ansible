@@ -27,6 +27,10 @@
     - /etc/php5/fpm/php.ini
   tags: config
 
+- name: ensure default website is disabled
+  action: file path=/etc/nginx/sites-enabled/default state=absent
+  tags: config
+
 - name: ensure nginx is reloaded
   action: service name=nginx state=reloaded
   tags: config

@@ -1,0 +1,13 @@
+---
+- name: ensure mysql packages are installed
+  action: apt pkg={{ item }} force=yes
+  with_items:
+    - python-mysqldb
+    - mysql-server
+    - mysql-client
+  tags: install
+
+- name: ensure mysql service is up
+  action: service name=mysql state=started
+  tags: install
+

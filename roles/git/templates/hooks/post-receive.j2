@@ -1,5 +1,5 @@
 #!/bin/sh
 # post-receive hook
-{% if item.hook_post_receive %}
-{{ item.hook_post_receive }}
+{% if eher_git_hook_post_receive %}
+{{ eher_git_hook_post_receive }}
 {% endif %}

@@ -1,6 +1,5 @@
 ---
 - include: install.yml
 - include: config.yml
-- include: add_sites.yml
-- include: deploy.yml
+- include: add_site.yml
 

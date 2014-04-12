@@ -1,0 +1,5 @@
+---
+eher_package_server_name: localhost
+eher_package_port: 80
+eher_package_build_path: /tmp/packages
+eher_package_web_path: /var/www/packages

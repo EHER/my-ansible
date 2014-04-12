@@ -1,0 +1,17 @@
+---
+- name: ensure configurations are present
+  action: template src=nginx_server.j2 dest=/etc/nginx/sites-available/{{ eher_web_name }} owner=root group=root mode=0644
+  tags: add_site
+
+- name: ensure websites are enabled
+  action: file src=/etc/nginx/sites-available/{{ eher_web_name }} dest=/etc/nginx/sites-enabled/{{ eher_web_name }} state=link
+  tags: add_site
+
+- name: ensure web root directories exists and with right permissions
+  action: file path=/var/www/{{ eher_web_name }} owner=root group=www-data mode=0777 state=directory
+  tags: add_site
+
+- name: reload nginx service
+  action: service name=nginx state=reloaded
+  tags: add_site
+
