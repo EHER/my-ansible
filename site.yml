@@ -6,6 +6,30 @@
   roles:
     - common
 
+- hosts: git
+  sudo: yes
+  tags: git
+  roles:
+    - role: git
+      eher_git_path: "/home/git/chegamos.git"
+      eher_git_hook_post_receive: "pack_chegamos.sh"
+
+    - role: git
+      eher_git_path: "/home/git/eher.git"
+      eher_git_hook_post_receive: "pack_eher.sh"
+
+    - role: git
+      eher_git_path: "/home/git/meublog.git"
+      eher_git_hook_post_receive: "pack_meublog.sh"
+
+    - role: git
+      eher_git_path: "/home/git/paginasbrancas.git"
+      eher_git_hook_post_receive: "pack_paginasbrancas.sh"
+
+    - role: git
+      eher_git_path: "/home/git/queroservoluntario.git"
+      eher_git_hook_post_receive: "pack_queroservoluntario.sh"
+
 - hosts: mysql
   sudo: yes
   tags: mysql
@@ -84,8 +108,8 @@
           - /css/main.css /min/?g=css
           - /js/head.js /min/?g=js_head
           - /js/body.js /min/?g=js_body
-        eher_eher_php_enabled: true
-        eher_eher_php_params: []
+        eher_web_php_enabled: true
+        eher_php_params: []
 
       - role: web
         eher_web_name: meublog
@@ -127,7 +151,7 @@
           - SYMFONY__MAILER__AUTH__MODE login
           - SYMFONY__MAILER__ENCRYPTION tls
           - SYMFONY__FRAMEWORK__LOCALE en
-          - SYMFONY__FRAMEWORK__SECRET {{ framework_secret }}
+          - SYMFONY__FRAMEWORK__SECRET {{ queroservoluntario_framework_secret }}
           - SYMFONY__APONTADOR__API__BASEURL "http://api.apontador.com.br/v1/"
           - SYMFONY__APONTADOR__API__CONSUMERKEY {{ queroservoluntario_apontador_api_key }}
           - SYMFONY__APONTADOR__API__CONSUMERSECRET {{ queroservoluntario_apontador_api_secret }}
