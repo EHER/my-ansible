@@ -7,7 +7,7 @@ git checkout {{ eher_package_git_branch|default('master') }}
 
 {{ eher_package_build_command|default('') }}
 
-fpm -s dir -t deb -n {{ eher_package_name }} --prefix /var/www/{{ eher_package_name }} -v 1.0 --iteration $(date +"%Y%m%d%H%M%S") .
+fpm -s dir -t deb -n {{ eher_package_name }} --prefix {{ eher_package_destination_prefix|default('/usr/local/' + eher_package_name) }} -v 1.0 --iteration $(date +"%Y%m%d%H%M%S") .
 mv *.deb /var/www/packages
 
 cd /var/www/packages

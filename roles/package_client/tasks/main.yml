@@ -1,9 +1,9 @@
 ---
 - name: ensure localhost apt software channel is configured
-  action: apt_repository repo="deb http://{{ eher_package_server_name }}:{{ eher_package_port }} /" state=present
+  action: apt_repository repo="deb http://{{ eher_package_client_host }}:{{ eher_package_client_port }} /" state=present
 
 - name: ensure localhost apt-src software channel is absent
-  action: apt_repository repo="deb-src http://{{ eher_package_server_name }}:{{ eher_package_port }} /" state=absent
+  action: apt_repository repo="deb-src http://{{ eher_package_client_host }}:{{ eher_package_client_port }} /" state=absent
 
 - name: ensure apt cache is updated
   action: apt update_cache=yes

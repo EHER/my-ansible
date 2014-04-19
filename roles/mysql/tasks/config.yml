@@ -5,8 +5,8 @@
   with_items:
     - 127.0.0.1
     - ::1
-    - localhost
     - $ansible_hostname
+    - localhost
   ignore_errors: yes
   tags: config
 
@@ -17,9 +17,9 @@
 - name: ensure anonymous users are not in the database
   action: mysql_user name='' host={{ item }} state=absent
   with_items:
-    - localhost
     - $inventory_hostname
     - $ansible_hostname
+    - localhost
   tags: config
 
 - name: remove the test database

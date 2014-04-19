@@ -1,0 +1,3 @@
+---
+eher_package_client_host: localhost
+eher_package_client_port: 80
