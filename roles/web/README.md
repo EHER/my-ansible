@@ -1,5 +1,5 @@
 # web
-Role to manage web server with nginx and php
+Role to manage a simple web server with nginx and php
 
 ## variables
 - eher_web_name - just a name to identify the website
