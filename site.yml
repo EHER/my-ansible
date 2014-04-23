@@ -10,23 +10,23 @@
   sudo: yes
   tags: git
   roles:
-    - role: git
+    - role: EHER.git
       eher_git_path: "/home/git/chegamos.git"
       eher_git_hook_post_receive: "pack_chegamos.sh"
 
-    - role: git
+    - role: EHER.git
       eher_git_path: "/home/git/eher.git"
       eher_git_hook_post_receive: "pack_eher.sh"
 
-    - role: git
+    - role: EHER.git
       eher_git_path: "/home/git/meublog.git"
       eher_git_hook_post_receive: "pack_meublog.sh"
 
-    - role: git
+    - role: EHER.git
       eher_git_path: "/home/git/paginasbrancas.git"
       eher_git_hook_post_receive: "pack_paginasbrancas.sh"
 
-    - role: git
+    - role: EHER.git
       eher_git_path: "/home/git/queroservoluntario.git"
       eher_git_hook_post_receive: "pack_queroservoluntario.sh"
 
