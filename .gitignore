@@ -1,10 +1,11 @@
 .Python
 .vagrant
 vagrant_ansible_inventory_default
-stage
 production
+stage
 bin/
+credentials/
 include/
 lib/
+roles/EHER.*
 share/
-credentials/
