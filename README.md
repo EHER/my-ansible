@@ -1,5 +1,8 @@
 # my-ansible
-Ansible orchestration of php web servers
+Ansible orchestration of my web development environment
+
+# ansible roles
+- [EHER.git](https://github.com/EHER/ansible-git)
 
 # Installation
 Clone the repository
@@ -8,10 +11,14 @@ git clone git://github.com/EHER/my-ansible.git
 cd my-ansible
 ```
 
-
 Use pip to install dependencies (virtualenv is also recommended)
 ```bash
-pip install -r deps.txt
+pip install -r dependencies.txt
+```
+
+Install aditional ansible roles
+```
+ansible-galaxy install -fr ROLES_FILE
 ```
 
 # Configuration
@@ -21,11 +28,14 @@ vim ansible.cfg
 ```
 
 ```
+# ansible.cfg
 [defaults]
-hostfile = ./hosts
+hostfile = hosts
+roles_path = roles
+roles_file = ROLES_FILE
 module_name = command
-#remote_user = ubuntu
-#private_key_file = /where/hell/are/your/key.pem
+remote_user = vagrant
+private_key_file = ~/.vagrant.d/insecure_private_key
 ```
 
 Add your machines to hosts file:
@@ -34,16 +44,21 @@ vim hosts
 ```
 
 ```
-[web]
-my-aws-host-or-something-like-this.com
-other-host.com
-
-[package]
-my-aws-host-or-something-like-this.com
+# hosts
+[mysql]
+192.168.56.101
 
 [git]
-my-aws-host-or-something-like-this.com
-my-git-host.whatever.com
+192.168.56.101
+
+[package_client]
+192.168.56.101
+
+[package_server]
+192.168.56.101
+
+[web]
+192.168.56.101
 ```
 
 Then test your configuration
@@ -52,9 +67,20 @@ ansible all -m ping
 ```
 
 # Using
-Just run the main playbook
+
+Take a look at site.yml
+```bash
+vim site.yml
+```
+
+And run the playbook
 ```bash
 ansible-playbook site.yml
+```
+
+You can also run just some part of the playbook usig tags
+```bash
+ansible-playbook site.yml --tags git
 ```
 
 # Useful Commands
