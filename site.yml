@@ -88,7 +88,7 @@
   sudo: yes
   tags: web
   roles:
-      - role: web
+      - role: EHER.web
         eher_web_name: 'queroservoluntario'
         eher_web_server_name: 'queroservoluntario.com'
         eher_web_root: '/var/www/queroservoluntario/web'
@@ -96,7 +96,7 @@
         eher_web_php_enabled: true
         eher_web_php_params: []
 
-      - role: web
+      - role: EHER.web
         eher_web_name: eher
         eher_web_server_name: eher.com.br
         eher_web_root: /var/www/eher/wordpress
@@ -104,7 +104,7 @@
         eher_web_php_enabled: true
         eher_web_php_params: []
 
-      - role: web
+      - role: EHER.web
         eher_web_name: chegamos
         eher_web_server_name: chegamos.com
         eher_web_root: /var/www/chegamos/app/webroot
@@ -116,7 +116,7 @@
         eher_web_php_enabled: true
         eher_php_params: []
 
-      - role: web
+      - role: EHER.web
         eher_web_name: meublog
         eher_web_server_name: meublog.com
         eher_web_root: /var/www/meublog
@@ -124,7 +124,7 @@
         eher_web_php_enabled: true
         eher_web_php_params: []
 
-      - role: web
+      - role: EHER.web
         eher_web_name: paginasbrancas
         eher_web_server_name: paginasbrancas.com.br
         eher_web_root: /var/www/paginasbrancas/WebContent
@@ -132,7 +132,7 @@
         eher_web_php_enabled: true
         eher_web_php_params: []
 
-      - role: web
+      - role: EHER.web
         eher_web_name: queroservoluntario
         eher_web_server_name: queroservoluntario.com
         eher_web_root: /var/www/queroservoluntario/web
