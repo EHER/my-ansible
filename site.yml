@@ -34,11 +34,11 @@
   sudo: yes
   tags: mysql
   roles:
-      - role: mysql
+      - role: EHER.mysql
         eher_mysql_db: 'eher'
         eher_mysql_user: 'blog_eher'
 
-      - role: mysql
+      - role: EHER.mysql
         eher_mysql_db: 'queroservoluntario'
         eher_mysql_user: 'qservoluntario'
 

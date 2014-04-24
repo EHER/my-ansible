@@ -3,6 +3,7 @@ Ansible orchestration of my web development environment
 
 # ansible roles
 - [EHER.git](https://github.com/EHER/ansible-git)
+- [EHER.mysql](https://github.com/EHER/ansible-mysql)
 
 # Installation
 Clone the repository
