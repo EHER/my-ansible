@@ -46,29 +46,29 @@
   sudo: yes
   tags: package_server
   roles:
-      - role: package_server
+      - role: EHER.package_server
         eher_package_name: 'chegamos'
         eher_package_git_repo: '/home/git/chegamos.git'
         eher_package_build_command: 'make install'
         eher_package_destination_prefix: '/var/www/chegamos'
 
-      - role: package_server
+      - role: EHER.package_server
         eher_package_name: 'eher'
         eher_package_git_branch: 'Eher'
         eher_package_git_repo: '/home/git/eher.git'
         eher_package_destination_prefix: '/var/www/eher'
 
-      - role: package_server
+      - role: EHER.package_server
         eher_package_name: 'meublog'
         eher_package_git_repo: '/home/git/meublog.git'
         eher_package_destination_prefix: '/var/www/meublog'
 
-      - role: package_server
+      - role: EHER.package_server
         eher_package_name: 'paginasbrancas'
         eher_package_git_repo: '/home/git/paginasbrancas.git'
         eher_package_destination_prefix: '/var/www/paginasbrancas'
 
-      - role: package_server
+      - role: EHER.package_server
         eher_package_name: 'queroservoluntario'
         eher_package_git_repo: '/home/git/queroservoluntario.git'
         eher_package_build_command: 'make dummy-config install config'

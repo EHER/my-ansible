@@ -5,6 +5,7 @@ Ansible orchestration of my web development environment
 - [EHER.git](https://github.com/EHER/ansible-git)
 - [EHER.mysql](https://github.com/EHER/ansible-mysql)
 - [EHER.package_client](https://github.com/EHER/ansible-package_client)
+- [EHER.package_server](https://github.com/EHER/ansible-package_server)
 - [EHER.web](https://github.com/EHER/ansible-web)
 
 # Installation
