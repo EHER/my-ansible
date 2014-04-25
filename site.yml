@@ -78,11 +78,11 @@
   sudo: yes
   tags: package_client
   roles:
-      - { role: package_client, eher_package_name: 'chegamos' }
-      - { role: package_client, eher_package_name: 'eher' }
-      - { role: package_client, eher_package_name: 'meublog' }
-      - { role: package_client, eher_package_name: 'paginasbrancas' }
-      - { role: package_client, eher_package_name: 'queroservoluntario' }
+      - { role: EHER.package_client, eher_package_name: 'chegamos' }
+      - { role: EHER.package_client, eher_package_name: 'eher' }
+      - { role: EHER.package_client, eher_package_name: 'meublog' }
+      - { role: EHER.package_client, eher_package_name: 'paginasbrancas' }
+      - { role: EHER.package_client, eher_package_name: 'queroservoluntario' }
 
 - hosts: web
   sudo: yes
