@@ -7,5 +7,5 @@ bin/
 credentials/
 include/
 lib/
-roles/EHER.*
+roles/*.*
 share/

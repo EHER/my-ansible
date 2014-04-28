@@ -42,6 +42,11 @@
         eher_mysql_db: 'queroservoluntario'
         eher_mysql_user: 'qservoluntario'
 
+      - role: markchristophercooper.automysqlbackup
+        automysqlbackup_username: root
+        automysqlbackup_password: "{{ mysql_root_password }}"
+
+
 - hosts: package_server
   sudo: yes
   tags: package_server
@@ -163,3 +168,4 @@
           - SYMFONY__ADMIN__WEB__USER admin
           - SYMFONY__ADMIN__WEB__PASSWORD {{ queroservoluntario_admin_password }}
           - SYMFONY__CONTACT__EMAIL tequeremosvoluntario@gmail.com
+

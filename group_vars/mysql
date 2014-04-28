@@ -1,0 +1,1 @@
+mysql_root_password: "{{ lookup('password', './credentials/mysql/root_password') }}"

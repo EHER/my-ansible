@@ -7,6 +7,7 @@ Ansible orchestration of my web development environment
 - [EHER.package_client](https://github.com/EHER/ansible-package_client)
 - [EHER.package_server](https://github.com/EHER/ansible-package_server)
 - [EHER.web](https://github.com/EHER/ansible-web)
+- [markchristophercooper.automysqlbackup](https://githu.com/markchristophercooper.automysqlbackup)
 
 # Installation
 Clone the repository
