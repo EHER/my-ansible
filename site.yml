@@ -78,6 +78,7 @@
         eher_package_server_git_repo: '/home/git/queroservoluntario.git'
         eher_package_server_build_command: 'make dummy-config install config'
         eher_package_server_destination_prefix: '/var/www/queroservoluntario'
+        eher_package_server_after_install_command: 'rm -rf app/cache/*; make perms'
 
 - hosts: package_client
   sudo: yes
