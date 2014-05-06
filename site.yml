@@ -45,6 +45,14 @@
       - role: markchristophercooper.automysqlbackup
         automysqlbackup_username: root
         automysqlbackup_password: "{{ mysql_root_password }}"
+        automysqlbackup_backup_directory: "/var/lib/automysqlbackup"
+
+      - role: EHER.duplicity_backup
+        eher_duplicity_backup_root: /var/lib/automysqlbackup
+        eher_duplicity_backup_include_list: [ "/var/lib/automysqlbackup/" ]
+        eher_duplicity_backup_destination: "s3://s3.amazonaws.com/backup_eher/{{ ansible_hostname }}/"
+        eher_duplicity_backup_aws_key: "{{ aws_key }}"
+        eher_duplicity_backup_aws_secret: "{{ aws_secret }}"
 
 
 - hosts: package_server

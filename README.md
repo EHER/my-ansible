@@ -2,6 +2,7 @@
 Ansible orchestration of my web development environment
 
 # ansible roles
+- [EHER.duplicity_backup](https://github.com/EHER/ansible-duplicity_backup)
 - [EHER.git](https://github.com/EHER/ansible-git)
 - [EHER.mysql](https://github.com/EHER/ansible-mysql)
 - [EHER.package_client](https://github.com/EHER/ansible-package_client)
