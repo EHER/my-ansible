@@ -103,14 +103,6 @@
   tags: web
   roles:
       - role: EHER.web
-        eher_web_name: 'queroservoluntario'
-        eher_web_server_name: 'queroservoluntario.com'
-        eher_web_root: '/var/www/queroservoluntario/web'
-        eher_web_rewrite: []
-        eher_web_php_enabled: true
-        eher_web_php_params: []
-
-      - role: EHER.web
         eher_web_name: eher
         eher_web_server_name: eher.com.br
         eher_web_root: /var/www/eher/wordpress
@@ -150,7 +142,7 @@
         eher_web_name: queroservoluntario
         eher_web_server_name: queroservoluntario.com
         eher_web_root: /var/www/queroservoluntario/web
-        eher_web_try_files: "$uri $uri/ /app.php?args"
+        eher_web_try_files: "$uri $uri/ /app.php?$args"
         eher_web_rewrite: []
         eher_web_php_enabled: true
         eher_web_php_params:
