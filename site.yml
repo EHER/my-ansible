@@ -46,6 +46,9 @@
         automysqlbackup_username: root
         automysqlbackup_password: "{{ mysql_root_password }}"
         automysqlbackup_backup_directory: "/var/lib/automysqlbackup"
+        automysqlbackup_cron:
+          hour: 23
+          minute: 55
 
       - role: EHER.duplicity_backup
         eher_duplicity_backup_root: /var/lib/automysqlbackup
