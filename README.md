@@ -1,6 +1,12 @@
 # my-ansible
 Ansible orchestration of my web development environment
 
++--------------------+   +--------------------+   +--------------------+
+|                    |   |                    |   |                    |
+|       mysql        |   |   package_server   |   |        web         |
+|                    |   |                    |   |                    |
++--------------------+   +--------------------+   +--------------------+
+
 # ansible roles
 - [EHER.duplicity_backup](https://github.com/EHER/ansible-duplicity_backup)
 - [EHER.git](https://github.com/EHER/ansible-git)
@@ -28,7 +34,13 @@ ansible-galaxy install -fr ROLES_FILE
 ```
 
 # Configuration
-Configure you remote user and where are your private key
+Use the current vagrant configuration to power up a new virtual machine
+```bash
+vagrant up
+```
+
+Or add your own configurations into ansible.cfg and hosts file.
+
 ```bash
 vim ansible.cfg
 ```
@@ -54,12 +66,6 @@ vim hosts
 [mysql]
 192.168.56.101
 
-[git]
-192.168.56.101
-
-[package_client]
-192.168.56.101
-
 [package_server]
 192.168.56.101
 
@@ -67,26 +73,26 @@ vim hosts
 192.168.56.101
 ```
 
-Then test your configuration
+Use the ping module to test your configuration
 ```bash
 ansible all -m ping
 ```
 
 # Using
 
-Take a look at site.yml
-```bash
-vim site.yml
-```
-
-And run the playbook
+Run the main playbook
 ```bash
 ansible-playbook site.yml
 ```
 
 You can also run just some part of the playbook usig tags
 ```bash
-ansible-playbook site.yml --tags git
+ansible-playbook site.yml --tags web
+```
+
+To deploy web projects to the latest version run the deploy playbook
+```bash
+ansible-playbook deploy.yml
 ```
 
 # Useful Commands

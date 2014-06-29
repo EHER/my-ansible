@@ -6,161 +6,157 @@
   roles:
     - common
 
-- hosts: git
-  sudo: yes
-  tags: git
-  roles:
-    - role: EHER.git
-      eher_git_path: "/home/git/chegamos.git"
-      eher_git_hook_post_receive: "pack_chegamos.sh"
-
-    - role: EHER.git
-      eher_git_path: "/home/git/eher.git"
-      eher_git_hook_post_receive: "pack_eher.sh"
-
-    - role: EHER.git
-      eher_git_path: "/home/git/meublog.git"
-      eher_git_hook_post_receive: "pack_meublog.sh"
-
-    - role: EHER.git
-      eher_git_path: "/home/git/paginasbrancas.git"
-      eher_git_hook_post_receive: "pack_paginasbrancas.sh"
-
-    - role: EHER.git
-      eher_git_path: "/home/git/queroservoluntario.git"
-      eher_git_hook_post_receive: "pack_queroservoluntario.sh"
-
 - hosts: mysql
   sudo: yes
   tags: mysql
   roles:
-      - role: EHER.mysql
-        eher_mysql_db: 'eher'
-        eher_mysql_user: 'blog_eher'
+    - role: EHER.mysql
+      eher_mysql_db: 'eher'
+      eher_mysql_user: 'blog_eher'
 
-      - role: EHER.mysql
-        eher_mysql_db: 'queroservoluntario'
-        eher_mysql_user: 'qservoluntario'
+    - role: EHER.mysql
+      eher_mysql_db: 'queroservoluntario'
+      eher_mysql_user: 'qservoluntario'
 
-      - role: markchristophercooper.automysqlbackup
-        automysqlbackup_username: root
-        automysqlbackup_password: "{{ mysql_root_password }}"
-        automysqlbackup_backup_directory: "/var/lib/automysqlbackup"
-        automysqlbackup_cron:
-          hour: 23
-          minute: 55
-          day: "*"
-          month: "*"
-          weekday: "*"
+    - role: markchristophercooper.automysqlbackup
+      automysqlbackup_username: root
+      automysqlbackup_password: "{{ mysql_root_password }}"
+      automysqlbackup_backup_directory: "/var/lib/automysqlbackup"
+      automysqlbackup_cron:
+        hour: 23
+        minute: 55
+        day: "*"
+        month: "*"
+        weekday: "*"
 
-      - role: EHER.duplicity_backup
-        eher_duplicity_backup_root: /var/lib/automysqlbackup
-        eher_duplicity_backup_include_list: [ "/var/lib/automysqlbackup/" ]
-        eher_duplicity_backup_destination: "s3://s3.amazonaws.com/backup_eher/{{ ansible_hostname }}/"
-        eher_duplicity_backup_aws_key: "{{ aws_key }}"
-        eher_duplicity_backup_aws_secret: "{{ aws_secret }}"
+    - role: EHER.duplicity_backup
+      eher_duplicity_backup_root: /var/lib/automysqlbackup
+      eher_duplicity_backup_include_list: [ "/var/lib/automysqlbackup/" ]
+      eher_duplicity_backup_destination: "s3://s3.amazonaws.com/backup_eher/{{ ansible_hostname }}/"
+      eher_duplicity_backup_aws_key: "{{ aws_key }}"
+      eher_duplicity_backup_aws_secret: "{{ aws_secret }}"
 
 - hosts: package_server
   sudo: yes
   tags: package_server
   roles:
-      - role: EHER.package_server
-        eher_package_server_name: 'chegamos'
-        eher_package_server_git_repo: '/home/git/chegamos.git'
-        eher_package_server_build_command: 'make install'
-        eher_package_server_destination_prefix: '/var/www/chegamos'
+    - role: EHER.git
+      eher_git_path: "/home/git/chegamos.git"
+      eher_git_hook_post_receive: "pack_chegamos.sh"
 
-      - role: EHER.package_server
-        eher_package_server_name: 'eher'
-        eher_package_server_git_branch: 'Eher'
-        eher_package_server_git_repo: '/home/git/eher.git'
-        eher_package_server_destination_prefix: '/var/www/eher'
+    - role: EHER.package_server
+      eher_package_server_name: 'chegamos'
+      eher_package_server_git_repo: '/home/git/chegamos.git'
+      eher_package_server_build_command: 'make install'
+      eher_package_server_destination_prefix: '/var/www/chegamos'
 
-      - role: EHER.package_server
-        eher_package_server_name: 'meublog'
-        eher_package_server_git_repo: '/home/git/meublog.git'
-        eher_package_server_destination_prefix: '/var/www/meublog'
+    - role: EHER.git
+      eher_git_path: "/home/git/eher.git"
+      eher_git_hook_post_receive: "pack_eher.sh"
 
-      - role: EHER.package_server
-        eher_package_server_name: 'paginasbrancas'
-        eher_package_server_git_repo: '/home/git/paginasbrancas.git'
-        eher_package_server_destination_prefix: '/var/www/paginasbrancas'
+    - role: EHER.package_server
+      eher_package_server_name: 'eher'
+      eher_package_server_git_branch: 'Eher'
+      eher_package_server_git_repo: '/home/git/eher.git'
+      eher_package_server_destination_prefix: '/var/www/eher'
 
-      - role: EHER.package_server
-        eher_package_server_name: 'queroservoluntario'
-        eher_package_server_git_repo: '/home/git/queroservoluntario.git'
-        eher_package_server_build_command: 'make dummy-config install config'
-        eher_package_server_destination_prefix: '/var/www/queroservoluntario'
-        eher_package_server_after_install_command: 'make clear perms'
+    - role: EHER.git
+      eher_git_path: "/home/git/meublog.git"
+      eher_git_hook_post_receive: "pack_meublog.sh"
+
+    - role: EHER.package_server
+      eher_package_server_name: 'meublog'
+      eher_package_server_git_repo: '/home/git/meublog.git'
+      eher_package_server_destination_prefix: '/var/www/meublog'
+
+    - role: EHER.git
+      eher_git_path: "/home/git/paginasbrancas.git"
+      eher_git_hook_post_receive: "pack_paginasbrancas.sh"
+
+    - role: EHER.package_server
+      eher_package_server_name: 'paginasbrancas'
+      eher_package_server_git_repo: '/home/git/paginasbrancas.git'
+      eher_package_server_destination_prefix: '/var/www/paginasbrancas'
+
+    - role: EHER.git
+      eher_git_path: "/home/git/queroservoluntario.git"
+      eher_git_hook_post_receive: "pack_queroservoluntario.sh"
+
+    - role: EHER.package_server
+      eher_package_server_name: 'queroservoluntario'
+      eher_package_server_git_repo: '/home/git/queroservoluntario.git'
+      eher_package_server_build_command: 'make dummy-config install config'
+      eher_package_server_destination_prefix: '/var/www/queroservoluntario'
+      eher_package_server_after_install_command: 'make clear perms'
 
 - hosts: web
   sudo: yes
   tags: web
   roles:
-      - role: EHER.web
-        eher_web_name: eher
-        eher_web_server_name: eher.com.br
-        eher_web_root: /var/www/eher/wordpress
-        eher_web_rewrite: []
-        eher_web_php_enabled: true
-        eher_web_php_params: []
+    - role: EHER.web
+      eher_web_name: eher
+      eher_web_server_name: eher.com.br
+      eher_web_root: /var/www/eher/wordpress
+      eher_web_rewrite: []
+      eher_web_php_enabled: true
+      eher_web_php_params: []
 
-      - role: EHER.web
-        eher_web_name: chegamos
-        eher_web_server_name: chegamos.com
-        eher_web_root: /var/www/chegamos/app/webroot
-        eher_web_try_files: "$uri $uri/ /index.php?url=$uri&$args"
-        eher_web_rewrite:
-          - /css/main.css /min/?g=css
-          - /js/head.js /min/?g=js_head
-          - /js/body.js /min/?g=js_body
-        eher_web_php_enabled: true
-        eher_web_php_params: []
+    - role: EHER.web
+      eher_web_name: chegamos
+      eher_web_server_name: chegamos.com
+      eher_web_root: /var/www/chegamos/app/webroot
+      eher_web_try_files: "$uri $uri/ /index.php?url=$uri&$args"
+      eher_web_rewrite:
+        - /css/main.css /min/?g=css
+        - /js/head.js /min/?g=js_head
+        - /js/body.js /min/?g=js_body
+      eher_web_php_enabled: true
+      eher_web_php_params: []
 
-      - role: EHER.web
-        eher_web_name: meublog
-        eher_web_server_name: meublog.com
-        eher_web_root: /var/www/meublog
-        eher_web_rewrite: []
-        eher_web_php_enabled: true
-        eher_web_php_params: []
+    - role: EHER.web
+      eher_web_name: meublog
+      eher_web_server_name: meublog.com
+      eher_web_root: /var/www/meublog
+      eher_web_rewrite: []
+      eher_web_php_enabled: true
+      eher_web_php_params: []
 
-      - role: EHER.web
-        eher_web_name: paginasbrancas
-        eher_web_server_name: paginasbrancas.com.br
-        eher_web_root: /var/www/paginasbrancas/WebContent
-        eher_web_rewrite: []
-        eher_web_php_enabled: true
-        eher_web_php_params: []
+    - role: EHER.web
+      eher_web_name: paginasbrancas
+      eher_web_server_name: paginasbrancas.com.br
+      eher_web_root: /var/www/paginasbrancas/WebContent
+      eher_web_rewrite: []
+      eher_web_php_enabled: true
+      eher_web_php_params: []
 
-      - role: EHER.web
-        eher_web_name: queroservoluntario
-        eher_web_server_name: queroservoluntario.com
-        eher_web_root: /var/www/queroservoluntario/web
-        eher_web_try_files: "$uri $uri/ /app.php?$args"
-        eher_web_rewrite: []
-        eher_web_php_enabled: true
-        eher_web_php_params:
-          - SYMFONY__DATABASE__DRIVER pdo_mysql
-          - SYMFONY__DATABASE__HOST ""
-          - SYMFONY__DATABASE__PORT ~
-          - SYMFONY__DATABASE__NAME queroservoluntario
-          - SYMFONY__DATABASE__USER qsvoluntario
-          - SYMFONY__DATABASE__PASSWORD "{{ queroservoluntario_mysql_password }}"
-          - SYMFONY__DATABASE__SOCKET /var/run/mysqld/mysqld.sock
-          - SYMFONY__DATABASE__PATH ./db
-          - SYMFONY__MAILER__TRANSPORT smtp
-          - SYMFONY__MAILER__HOST email-smtp.us-east-1.amazonaws.com
-          - SYMFONY__MAILER__PORT 587
-          - SYMFONY__MAILER__USER {{ queroservoluntario_aws_mail_user }}
-          - SYMFONY__MAILER__PASSWORD {{ queroservoluntario_aws_mail_password }}
-          - SYMFONY__MAILER__AUTH__MODE login
-          - SYMFONY__MAILER__ENCRYPTION tls
-          - SYMFONY__FRAMEWORK__LOCALE en
-          - SYMFONY__FRAMEWORK__SECRET {{ queroservoluntario_framework_secret }}
-          - SYMFONY__APONTADOR__API__BASEURL "http://api.apontador.com.br/v1/"
-          - SYMFONY__APONTADOR__API__CONSUMERKEY {{ queroservoluntario_apontador_api_key }}
-          - SYMFONY__APONTADOR__API__CONSUMERSECRET {{ queroservoluntario_apontador_api_secret }}
-          - SYMFONY__ADMIN__WEB__USER admin
-          - SYMFONY__ADMIN__WEB__PASSWORD {{ queroservoluntario_admin_password }}
-          - SYMFONY__CONTACT__EMAIL tequeremosvoluntario@gmail.com
+    - role: EHER.web
+      eher_web_name: queroservoluntario
+      eher_web_server_name: queroservoluntario.com
+      eher_web_root: /var/www/queroservoluntario/web
+      eher_web_try_files: "$uri $uri/ /app.php?$args"
+      eher_web_rewrite: []
+      eher_web_php_enabled: true
+      eher_web_php_params:
+        - SYMFONY__DATABASE__DRIVER pdo_mysql
+        - SYMFONY__DATABASE__HOST ""
+        - SYMFONY__DATABASE__PORT ~
+        - SYMFONY__DATABASE__NAME queroservoluntario
+        - SYMFONY__DATABASE__USER qsvoluntario
+        - SYMFONY__DATABASE__PASSWORD "{{ queroservoluntario_mysql_password }}"
+        - SYMFONY__DATABASE__SOCKET /var/run/mysqld/mysqld.sock
+        - SYMFONY__DATABASE__PATH ./db
+        - SYMFONY__MAILER__TRANSPORT smtp
+        - SYMFONY__MAILER__HOST email-smtp.us-east-1.amazonaws.com
+        - SYMFONY__MAILER__PORT 587
+        - SYMFONY__MAILER__USER {{ queroservoluntario_aws_mail_user }}
+        - SYMFONY__MAILER__PASSWORD {{ queroservoluntario_aws_mail_password }}
+        - SYMFONY__MAILER__AUTH__MODE login
+        - SYMFONY__MAILER__ENCRYPTION tls
+        - SYMFONY__FRAMEWORK__LOCALE en
+        - SYMFONY__FRAMEWORK__SECRET {{ queroservoluntario_framework_secret }}
+        - SYMFONY__APONTADOR__API__BASEURL "http://api.apontador.com.br/v1/"
+        - SYMFONY__APONTADOR__API__CONSUMERKEY {{ queroservoluntario_apontador_api_key }}
+        - SYMFONY__APONTADOR__API__CONSUMERSECRET {{ queroservoluntario_apontador_api_secret }}
+        - SYMFONY__ADMIN__WEB__USER admin
+        - SYMFONY__ADMIN__WEB__PASSWORD {{ queroservoluntario_admin_password }}
+        - SYMFONY__CONTACT__EMAIL tequeremosvoluntario@gmail.com

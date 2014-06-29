@@ -1,8 +1,7 @@
 ---
 # file: deploy.yml
-- hosts: package_client
+- hosts: web
   sudo: yes
-  tags: package_client
   roles:
       - { role: EHER.package_client, eher_package_name: 'chegamos' }
       - { role: EHER.package_client, eher_package_name: 'eher' }
