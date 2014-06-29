@@ -113,6 +113,3 @@ Get Vagrant remote_user
 ```bash
 vagrant ssh-config | grep 'User ' | awk '{print $2}'
 ```
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/EHER/my-ansible/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
