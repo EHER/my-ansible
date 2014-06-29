@@ -1,11 +1,13 @@
 # my-ansible
 Ansible orchestration of my web development environment
 
+```
 +--------------------+   +--------------------+   +--------------------+
 |                    |   |                    |   |                    |
 |       mysql        |   |   package_server   |   |        web         |
 |                    |   |                    |   |                    |
 +--------------------+   +--------------------+   +--------------------+
+```
 
 # ansible roles
 - [EHER.duplicity_backup](https://github.com/EHER/ansible-duplicity_backup)
