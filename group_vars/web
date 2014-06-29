@@ -1,5 +1,7 @@
 ---
 # file: group_vars/web
+eher_package_client_host: localhost
+eher_package_client_port: 80
 queroservoluntario_framework_secret: "{{ lookup('password', '../../../credentials/queroservoluntario/framework_secret length=32') }}"
 queroservoluntario_admin_password: "{{ lookup('password', '../../../credentials/queroservoluntario/admin_password length=5') }}"
 queroservoluntario_mysql_password: "{{ lookup('password', '../../../credentials/queroservoluntario/mysql_password length=15') }}"
