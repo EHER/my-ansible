@@ -1,6 +1,7 @@
 EHER.duplicity_backup
 EHER.git
 EHER.mysql
+EHER.mysql_snapshot
 EHER.package_client
 EHER.package_server
 EHER.web

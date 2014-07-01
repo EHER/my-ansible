@@ -1,0 +1,8 @@
+---
+# file: mysql_snapshot_restore.yml
+- hosts: mysql
+  roles:
+    - role: EHER.mysql_snapshot
+      eher_mysql_snapshot_action: restore
+      eher_mysql_snapshot_name: queroservoluntario
+      eher_mysql_snapshot_database: queroservoluntario
