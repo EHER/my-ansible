@@ -18,6 +18,10 @@
       eher_mysql_db: 'queroservoluntario'
       eher_mysql_user: 'qservoluntario'
 
+    - role: EHER.mysql
+      eher_mysql_db: 'helena'
+      eher_mysql_user: 'blog_helena'
+
     - role: markchristophercooper.automysqlbackup
       automysqlbackup_username: root
       automysqlbackup_password: "{{ mysql_root_password }}"
@@ -89,6 +93,25 @@
       eher_package_server_destination_prefix: '/var/www/queroservoluntario'
       eher_package_server_after_install_command: 'make clear perms'
 
+    - role: EHER.git
+      eher_git_path: "/home/git/papainoelexistemesmo.git"
+      eher_git_hook_post_receive: "pack_papainoelexistemesmo.sh"
+
+    - role: EHER.package_server
+      eher_package_server_name: 'papainoelexistemesmo'
+      eher_package_server_git_repo: '/home/git/papainoelexistemesmo.git'
+      eher_package_server_destination_prefix: '/var/www/papainoelexistemesmo'
+
+    - role: EHER.git
+      eher_git_path: "/home/git/helena.git"
+      eher_git_hook_post_receive: "pack_helena.sh"
+
+    - role: EHER.package_server
+      eher_package_server_name: 'helena'
+      eher_package_server_git_branch: 'master'
+      eher_package_server_git_repo: '/home/git/helena.git'
+      eher_package_server_destination_prefix: '/var/www/helena'
+
 - hosts: web
   sudo: yes
   tags: web
@@ -159,4 +182,21 @@
         - SYMFONY__APONTADOR__API__CONSUMERSECRET {{ queroservoluntario_apontador_api_secret }}
         - SYMFONY__ADMIN__WEB__USER admin
         - SYMFONY__ADMIN__WEB__PASSWORD {{ queroservoluntario_admin_password }}
-        - SYMFONY__CONTACT__EMAIL tequeremosvoluntario@gmail.com
+        - SYMFONY__CONTACT__EMAIL cadastro@queroservoluntario.com
+
+    - role: EHER.web
+      eher_web_name: papainoelexistemesmo
+      eher_web_server_name: papainoelexistemesmo.com.br
+      eher_web_root: /var/www/papainoelexistemesmo
+      eher_web_rewrite: []
+      eher_web_php_enabled: false
+      eher_web_php_params: []
+
+    - role: EHER.web
+      eher_web_name: helena
+      eher_web_server_name: helena.eher.com.br
+      eher_web_root: /var/www/helena/wordpress
+      eher_web_rewrite: []
+      eher_web_php_enabled: true
+      eher_web_php_params: []
+

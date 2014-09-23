@@ -8,4 +8,6 @@
       - { role: EHER.package_client, eher_package_name: 'meublog' }
       - { role: EHER.package_client, eher_package_name: 'paginasbrancas' }
       - { role: EHER.package_client, eher_package_name: 'queroservoluntario' }
+      - { role: EHER.package_client, eher_package_name: 'papainoelexistemesmo' }
+      - { role: EHER.package_client, eher_package_name: 'helena' }
 
