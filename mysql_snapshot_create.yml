@@ -1,9 +1,12 @@
 ---
 # file: mysql_snapshot_create.yml
 - hosts: mysql
+  sudo: yes
   roles:
     - role: EHER.mysql_snapshot
       eher_mysql_snapshot_action: create
       eher_mysql_snapshot_name: queroservoluntario
       eher_mysql_snapshot_database: queroservoluntario
+      eher_mysql_username: root
+      eher_mysql_password: "{{ mysql_root_password }}"
 
